@@ -260,44 +260,45 @@
                         {{-- <a href="{{ url('home1/cheu') }}"
                             class="nav-item nav-link {{ Request::is('home1/cheu') ? 'active' : '' }}">Home</a> --}}
 
+                        @if (auth::user()->role_id == 1 || auth::user()->role_id == 3)
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-copy"></i>
+                                    <p>
+                                        Exam
+                                        <i class="fas fa-angle-left right"></i>
+                                        <span class="badge badge-info right">6</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('exam.show') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Create Exam</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Exam Board</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('view.student') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Student</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pages/layout/fixed-sidebar.html" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Fixed Sidebar</p>
+                                        </a>
+                                    </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                <p>
-                                    Exam
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('exam.show') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Create Exam</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Exam Board</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('view.student') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Student</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fixed Sidebar</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        @endif
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">

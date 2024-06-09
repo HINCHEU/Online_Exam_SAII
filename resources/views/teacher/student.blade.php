@@ -87,31 +87,32 @@
                                                 <tbody>
                                                     @foreach ($students as $student)
                                                         <tr class="">
-
                                                             <td class="dtr-control sorting_1" tabindex="0">
                                                                 {{ $student->id }}</td>
-                                                            <td> {{ $student->stname }}</td>
-
-                                                            <td style=""> {{ $student->user->email }}</td>
-                                                            <td style=""> {{ $student->user->password }}</td>
-                                                            <td style=""> {{ $student->DateOfBirth }}</td>
+                                                            <td>{{ $student->stname }}</td>
+                                                            <td style="">{{ $student->user->email }}</td>
+                                                            <td style="">{{ $student->user->password }}</td>
+                                                            <td style="">
+                                                                {{ date('d-M-Y', strtotime($student->DateOfBirth)) }}</td>
                                                             <td style="display: flex;">
-                                                                <form id="logout-form" class="ml-1" action=""
-                                                                    method="GET" style="">
+                                                                <form id="updateForm{{ $student->id }}" class="ml-1"
+                                                                    action="{{ route('student.edit', ['student_id' => $student->id]) }}"
+                                                                    method="GET">
                                                                     @csrf
+                                                                    @method('GET')
                                                                     <button type="submit"
                                                                         class="btn btn-warning">Update</button>
                                                                 </form>
-                                                                <form id="deleteForm" class="ml-1" action=""
-                                                                    style="" method="POST">
+                                                                <form class="ml-1 deleteForm"
+                                                                    id="deleteForm{{ $student->id }}"
+                                                                    action="{{ route('student.delete', ['student_id' => $student->id]) }}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-
                                                                     <button type="button" class="btn btn-danger"
                                                                         data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal">Delete</button>
+                                                                        data-bs-target="#myModal{{ $student->id }}">Delete</button>
                                                                 </form>
-
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -120,26 +121,30 @@
 
                                             {{-- Module --}}
 
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Confirm Delete</h4>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Do you want to delete this permanently?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-danger"
-                                                                onclick="deleteMovie()">Yes</button>
+                                            <!-- Modals -->
+                                            @foreach ($students as $student)
+                                                <div class="modal" id="myModal{{ $student->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Confirm Delete</h4>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Do you want to delete this permanently?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    onclick="deleteStudent('deleteForm{{ $student->id }}')"
+                                                                    data-bs-dismiss="modal">Yes</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endforeach
                                             {{-- Module --}}
 
                                         </div>
@@ -185,8 +190,8 @@
         <!-- /.content -->
     </div>
     <script>
-        function deleteMovie() {
-            document.getElementById('deleteForm').submit();
+        function deleteStudent(formId) {
+            document.getElementById(formId).submit();
         }
     </script>
 @endsection

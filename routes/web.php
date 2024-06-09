@@ -76,12 +76,16 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/editTeacher/{id}', [TeacherController::class, 'Edit'])->name('editTeacher')->middleware('auth');
 Route::patch('/updateTeacher/{id}', [TeacherController::class, 'update'])->name('updateTeacher')->middleware('auth');
-Route::delete('/teachers/{teacher}/delete', [TeacherController::class, 'destroy'])->name('Teacher.delete')->middleware('auth');
+Route::delete('/teachers/{teacher_id}/delete', [TeacherController::class, 'destroy'])->name('Teacher.delete')->middleware('auth');
 
-////For teacher
+////For teacher  --- CRUDE STUDENT
 Route::get('/Teacher/student', [ForTeacherController::class, 'index'])->name('view.student')->middleware('auth');
 Route::get('/Teacher/add', [ForTeacherController::class, 'show'])->name('student.add')->middleware('auth');
 Route::get('/Teacher/create', [ForTeacherController::class, 'create'])->name('student.create')->middleware('auth');
+Route::delete('/Teacher/{student_id}/student', [ForTeacherController::class, 'delete'])->name('student.delete')->middleware('auth');
+Route::get('/Teacher/student/{student_id}', [ForTeacherController::class, 'edit'])->name('student.edit')->middleware('auth');
+Route::patch('/Teacher/{student_id}/student', [ForTeacherController::class, 'update'])->name('student.update')->middleware('auth');
+
 
 //For Student
 Route::any('/student/login', function () {

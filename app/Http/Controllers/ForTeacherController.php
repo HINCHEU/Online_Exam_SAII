@@ -12,9 +12,7 @@ class ForTeacherController extends Controller
     //
     public function index()
     {
-        $students =  student::all();
-        // $email = $students->User->id;
-        // dd($email);
+        $students = Student::where('status', 1)->get();
 
         return view('teacher.student')->with('students', $students);
     }
@@ -37,7 +35,7 @@ class ForTeacherController extends Controller
         $users->name = $request->input('stname');
         $users->email = $request->input('email');
         $users->password = bcrypt($request->input('password')); //
-        $users->role_id =  2; // Student role id is 4
+        $users->role_id =  2; // Student role id is 2
         $users->status = 1; //1 ==active
         $users->created_by = auth()->user()->id; //Assing Created by to the one who created this account
         //dd($users);
@@ -52,6 +50,7 @@ class ForTeacherController extends Controller
         $format = "Y-m-d";
         $DOB = date_format($DOB, $format);
         $students->DateOfBirth = $DOB;
+        $students->status = 1;
         $students->user_id =  $latest_user->id + 1; // Assign User Id with lastest User ID
         // dd($students);
         if ($users->save() and $students->save()) {
@@ -59,5 +58,54 @@ class ForTeacherController extends Controller
         } else {
             return redirect()->back()->withErrors('Failed to add student'); // Use withErrors to display error messages
         }
+    }
+    public function delete(Request $request, $student_id)
+    {
+        $student = Student::find($student_id);
+
+        if (!$student) {
+            return redirect()->route('view.student')->with('error', 'Student not found.');
+        }
+
+        // Update the status to 0 instead of deleting
+        $student->status = 0;
+        $student->save();
+
+        return redirect()->route('view.student')->with('success', 'Student status updated successfully.');
+    }
+    ///edit Student (view)
+    function edit(Request $request, $student_id)
+    {
+        $student = Student::find($student_id);
+
+
+        //dd($student);
+        return view('teacher.EditStudent')->with('student', $student);
+    }
+    // Update Student
+    public function update(Request $request, $id)
+    {
+        $EditStudent = student::findOrFail($id);
+
+        // Handle file upload if provided
+        // if ($request->hasFile('file')) {
+        //     // Process the file upload here
+        //     $file = $request->file('file');
+        //     // For example, you can store the file in a specific directory
+        //     $filename = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path('uploads'), $filename);
+        //     // Update the teacher record with the new file path
+        //     $EditTeacher->user_image = 'uploads/' . $filename;
+        // }
+
+        // Update other fields
+        $EditStudent->stname = $request->name;
+        $EditStudent->DateOfBirth = $request->DateOfBirth;
+        
+        // Save the changes
+        $EditStudent->save();
+
+        // Redirect back or wherever you want
+        return redirect()->route('view.student');
     }
 }

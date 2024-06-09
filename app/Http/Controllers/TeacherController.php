@@ -54,12 +54,15 @@ class TeacherController extends Controller
         // Redirect back or wherever you want
         return redirect()->route('show');
     }
-    public function destroy(Request $request, $teacher)
+
+    public function destroy(Request $request, $teacher_id)
     {
-        $id = $teacher;
-        dd($id);
+        //check id for delete
+        $id = $teacher_id;
+        //dd($id);
         $teacher = Teacher::find($id);
         $teacher->delete();
         return redirect()->route('show');
     }
+    
 }

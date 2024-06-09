@@ -35,9 +35,10 @@
             <select id="role" name="role"
                 class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="">{{ __('Select Role') }}</option>
-                @foreach ($roles as $role)
+                <option value="3">Teacher</option>
+                {{-- @foreach ($roles as $role)
                     <option value="{{ $role->id }}">{{ $role->name }}</option>
-                @endforeach
+                @endforeach --}}
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>

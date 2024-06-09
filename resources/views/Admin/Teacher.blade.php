@@ -92,21 +92,20 @@
                                                 <tbody>
                                                     @foreach ($Teachers as $teacher)
                                                         <tr class="">
-
                                                             <td class="dtr-control sorting_1" tabindex="0">
                                                                 {{ $teacher->id }}</td>
-                                                            <td> {{ $teacher->name }}</td>
+                                                            <td>{{ $teacher->name }}</td>
                                                             <th>
                                                                 @if ($teacher->user_image != null)
                                                                     <img src="{{ $teacher->user_image }}" alt=""
                                                                         sizes="" style="max-height: 50px">
                                                                 @else
-                                                                    <img src=" {{ asset('logo/cheu.png') }}" alt=""
+                                                                    <img src="{{ asset('logo/cheu.png') }}" alt=""
                                                                         sizes="" style="max-height: 50px">
                                                                 @endif
                                                             </th>
                                                             <td>{{ $teacher->role->name }}</td>
-                                                            <td style=""> {{ $teacher->email }}</td>
+                                                            <td style="">{{ $teacher->email }}</td>
                                                             <td style="">
                                                                 @if ($teacher->status == 1)
                                                                     Active
@@ -114,26 +113,25 @@
                                                                     Inactive
                                                                 @endif
                                                             </td>
-                                                            <td style=""> {{ $teacher->created_at }}</td>
+                                                            <td style="">{{ $teacher->created_at }}</td>
                                                             <td style="display: flex;">
-                                                                <form id="logout-form" class="ml-1"
+                                                                <form class="ml-1"
                                                                     action="{{ route('editTeacher', ['id' => $teacher->id]) }}"
-                                                                    method="GET" style="">
+                                                                    method="GET">
                                                                     @csrf
                                                                     <button type="submit"
                                                                         class="btn btn-warning">Update</button>
                                                                 </form>
-                                                                <form id="deleteForm" class="ml-1"
-                                                                    action="{{ route('Teacher.delete', $teacher->id) }}"
-                                                                    style="" method="POST">
+                                                                <form class="ml-1 deleteForm"
+                                                                    id="deleteForm{{ $teacher->id }}"
+                                                                    action="{{ route('Teacher.delete', ['teacher_id' => $teacher->id]) }}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-
                                                                     <button type="button" class="btn btn-danger"
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#myModal">Delete</button>
                                                                 </form>
-
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -141,7 +139,7 @@
                                             </table>
 
                                             {{-- Module --}}
-
+                                            <!-- Modal -->
                                             <div class="modal" id="myModal">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -157,11 +155,13 @@
                                                             <button type="button" class="btn btn-primary"
                                                                 data-bs-dismiss="modal">Close</button>
                                                             <button type="button" class="btn btn-danger"
-                                                                onclick="deleteMovie()">Yes</button>
+                                                                onclick="deleteTeacher('deleteForm{{ $teacher->id }}')"
+                                                                data-bs-dismiss="modal">Yes</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             {{-- Module --}}
 
                                         </div>
@@ -207,8 +207,8 @@
         <!-- /.content -->
     </div>
     <script>
-        function deleteMovie() {
-            document.getElementById('deleteForm').submit();
+        function deleteTeacher(formId) {
+            document.getElementById(formId).submit();
         }
     </script>
 @endsection
