@@ -1,5 +1,6 @@
 @extends('Admin.Master')
 @section('content')
+    @dump($errors)
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -49,7 +50,9 @@
                                 <div class="card-title">
                                     <h1>Exam Detail</h1>
                                     <div class="card-body">
-                                        <form action="{{ route('question.add') }}">
+                                        <form action="{{ route('exam.save', Auth::user()->id) }}" method="POST">
+                                            @csrf
+                                            @method('POST')
                                             <div class="form-group">
                                                 <label for="course_name" class="mt-3">Course Name:</label>
                                                 <input type="text" name="course_name" id="course_name"
@@ -79,13 +82,8 @@
                                                     class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label for="start_time" class="mt-3">End Time:</label>
+                                                <label for="end_time" class="mt-3">End Time:</label>
                                                 <input type="time" name="end_time" id="end_time" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="start_time" class="mt-3">Duration:</label>
-                                                <input type="text" name="end_time" id="end_time" class="form-control"
-                                                    disabled>
                                             </div>
 
                                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -101,22 +99,23 @@
 
                 </div>
                 <!-- /.col -->
-            </div>
-            <!-- /.row -->
+                <!-- /.container-fluid -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+        </section>
+    </div>
+    <!-- /.row -->
 
     </div>
 
-    <!-- /.container-fluid -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    </section>
+
     <!-- /.content -->
     </div>
 

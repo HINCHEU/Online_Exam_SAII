@@ -93,13 +93,21 @@ Route::any('/student/login', function () {
 })->name('student.login');
 
 
+//=============================================================================================
 //exam
+
+//view all exam
 Route::get('/exams', [ExamController::class, 'index'])->name('exam.show')->middleware('auth');
+//view to create exam
 Route::get('/exams/add', [ExamController::class, 'create'])->name('exam.add')->middleware('auth');
+//Add question to exam
 Route::get(
     'exam/question',
     function () {
         return view('teacher.exam.AddQuestion');
     }
 )->name('question.add');
+//save exam to Database
+Route::post('/exam/save/{user_id}', [ExamController::class, 'save'])->name('exam.save')->middleware('auth');
+
 require __DIR__ . '/auth.php';

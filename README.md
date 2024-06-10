@@ -6,6 +6,7 @@
 
 
 
+
 ## Git Clone
 
 1. Clone From Github
@@ -41,5 +42,20 @@
     ```cmd: 
     php artisan serve
     ```
-    
+ ---
+# Code Document   
+### ERROR MESSAGE ALTER
+```php
+    @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        </section>
+```
+
 
