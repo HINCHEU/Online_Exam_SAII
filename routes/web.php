@@ -9,6 +9,7 @@ use Faker\Guesser\Name;
 use Illuminate\Routing\Route as RoutingRoute;
 use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\QuizeAnswerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -101,14 +102,22 @@ Route::get('/exams', [ExamController::class, 'index'])->name('exam.show')->middl
 //view to create exam
 Route::get('/exams/add', [ExamController::class, 'create'])->name('exam.add')->middleware('auth');
 //Add question to exam
-Route::get(
-    'exam/question',
-    function () {
-        return view('teacher.exam.AddQuestion');
-    }
-)->name('question.add');
+
+Route::get('exam/question/', [QuizeAnswerController::class, 'index'])->name('question.add')->middleware('auth');
+// Route::get('exam/question',
+//     function () {
+//         return view('teacher.exam.AddQuestion');
+//     }
+// )->name('question.add');
+
 //save exam to Database
 Route::post('/exam/save/{user_id}', [ExamController::class, 'save'])->name('exam.save')->middleware('auth');
+
+//Save quize
+Route::post('/exam/question/save', [QuizeAnswerController::class, 'create'])->name('quize.create')->middleware('auth');
+
+
+
 
 
 //Exam Question

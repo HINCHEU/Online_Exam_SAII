@@ -35,47 +35,95 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="POST">
-
+                                <form action="{{ route('quize.create',) }}" method="POST">
                                     @csrf
-                                    @method('POST')
-                                    <div class="form-group ml-3">
 
-                                        <label for="question">Question 1 </label>
-                                        <input type="text" name="name" id="" class="form-control" required>
-                                    </div>
-                                    {{-- set question and answer --}}
-                                    <div class="form-group ml-3">
-                                        <label for="a">Option</label>
-                                        <div class="form-group ml-5">
-                                            <label for="name">A</label>
-                                            <input type="text" name="a" id="" class="form-control"
-                                                required>
+                                    <div id="question-container">
+                                        <div class="question-set">
+                                            <div class="form-group ml-3">
+                                                <label for="question" style="font-size: 2rem">Question 1</label>
+                                                <input type="text" name="questions[0][question]" class="form-control"
+                                                    required>
+                                            </div>
+                                            <div class="form-group ml-3">
+                                                <label>Options:</label>
+                                                <div class="form-group ml-5">
+                                                    <label for="answer_a">A</label>
+                                                    <input type="text" name="questions[0][answer_a]" class="form-control"
+                                                        required>
+                                                </div>
+                                                <div class="form-group ml-5">
+                                                    <label for="answer_b">B</label>
+                                                    <input type="text" name="questions[0][answer_b]" class="form-control"
+                                                        required>
+                                                </div>
+                                                <div class="form-group ml-5">
+                                                    <label for="answer_c">C</label>
+                                                    <input type="text" name="questions[0][answer_c]" class="form-control"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group ml-3">
+                                                <label for="correct_answer">Right Answer:</label>
+                                                <select name="questions[0][correct_answer]" class="form-control bg-primary"
+                                                    required>
+                                                    <option value="Option A">Option A</option>
+                                                    <option value="Option B">Option B</option>
+                                                    <option value="Option C">Option C</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group ml-5">
-                                            <label for="b">B</label>
-                                            <input type="text" name="b" id="" class="form-control"
-                                                required>
-                                        </div>
-                                        <div class="form-group ml-5">
-                                            <label for="c">C</label>
-                                            <input type="text" name="c" id="" class="form-control"
-                                                required>
-                                        </div>
-                                        {{-- option choose right answer --}}
-                                    </div>
-                                    <div class="form-group ml-3">
-                                        <label for="name"> Right Answer: </label>
-                                        <select name="right_answer" id="" class="form-control bg-primary">
-                                            <option value="Option A">Option A</option>
-                                            <option value="Option B">Option B</option>
-                                            <option value="Option C">Option C</option>
-                                        </select>
                                     </div>
 
-
-                                    <button type="submit" class="btn btn-danger"> save</button>
+                                    <button type="button" class="btn btn-primary" id="add-question">Add Question</button>
+                                    <button type="submit" class="btn btn-danger">Save</button>
                                 </form>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const container = document.getElementById('question-container');
+                                        const addButton = document.getElementById('add-question');
+
+                                        let questionIndex = 1;
+
+                                        addButton.addEventListener('click', function() {
+                                            const newQuestionSet = document.createElement('div');
+                                            newQuestionSet.className = 'question-set';
+                                            newQuestionSet.innerHTML = `
+                                                <div class="form-group ml-3">
+                                                    <label for="question${questionIndex}" style="font-size: 2rem">Question ${questionIndex + 1}</label>
+                                                    <input type="text" name="questions[${questionIndex}][question]" class="form-control" required>
+                                                </div>
+                                                <div class="form-group ml-3">
+                                                    <label>Options:</label>
+                                                    <div class="form-group ml-5">
+                                                        <label for="answer_a">A</label>
+                                                        <input type="text" name="questions[${questionIndex}][answer_a]" class="form-control" required>
+                                                    </div>
+                                                    <div class="form-group ml-5">
+                                                        <label for="answer_b">B</label>
+                                                        <input type="text" name="questions[${questionIndex}][answer_b]" class="form-control" required>
+                                                    </div>
+                                                    <div class="form-group ml-5">
+                                                        <label for="answer_c">C</label>
+                                                        <input type="text" name="questions[${questionIndex}][answer_c]" class="form-control" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ml-3">
+                                                    <label for="correct_answer${questionIndex}">Right Answer:</label>
+                                                    <select name="questions[${questionIndex}][correct_answer]" class="form-control bg-primary" required>
+                                                        <option value="Option A">Option A</option>
+                                                        <option value="Option B">Option B</option>
+                                                        <option value="Option C">Option C</option>
+                                                    </select>
+                                                </div>
+                                            `;
+                                            container.appendChild(newQuestionSet);
+                                            questionIndex++;
+                                        });
+                                    });
+                                </script>
+
 
                             </div>
                         </div>

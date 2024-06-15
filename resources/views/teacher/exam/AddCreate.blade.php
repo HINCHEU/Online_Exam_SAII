@@ -1,6 +1,6 @@
 @extends('Admin.Master')
 @section('content')
-    {{-- @dump($errors) --}}
+    @dump($errors)
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -84,6 +84,12 @@
                                             <div class="form-group">
                                                 <label for="end_time" class="mt-3">End Time:</label>
                                                 <input type="time" name="end_time" id="end_time" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="end_time" class="mt-3">Total Mark</label>
+                                                <input type="text" name="total_mark" id="total_mark"
+                                                    class="form-control">
                                             </div>
 
                                             <button class="btn btn-primary" type="submit">Submit</button>
