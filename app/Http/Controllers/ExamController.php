@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Exam;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
     //
     public function  index()
     {
-        return view('teacher.exam.CreateExam');
+        $exam = Exam::where('created_by', Auth::user()->id)->get();
+        return view('teacher.exam.CreateExam')->with('exam', $exam);
     }
+
     public function create()
     {
 
@@ -45,12 +48,12 @@ class ExamController extends Controller
         try {
             $exam->save();
         } catch (\Exception $e) {
-            // Log the exception for debugging
-            logger()->error('Failed to save exam: ' . $e->getMessage());
+            // Log the exception for debuggingi8
+            //logger()->error('Failed to save exam: ' . $e->getMessage());
 
-            dd($e);
+            // dd($e);
             // Redirect back with an error message
-            //return redirect()->back()->withInput()->with('error', 'Failed to save exam. Please try again.');
+            return redirect()->back()->withInput()->with('error', 'Failed to save exam. Please try again.');
         }
 
         // If saving succeeds, redirect to the "Question.add" route

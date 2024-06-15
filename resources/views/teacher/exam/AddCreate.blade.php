@@ -1,6 +1,6 @@
 @extends('Admin.Master')
 @section('content')
-    @dump($errors)
+    {{-- @dump($errors) --}}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

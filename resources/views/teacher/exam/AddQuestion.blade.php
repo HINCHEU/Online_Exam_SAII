@@ -35,51 +35,44 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="">
-                                    <div></div>
+                                <form action="" method="POST">
+
+                                    @csrf
+                                    @method('POST')
                                     <div class="form-group ml-3">
-                                        @csrf
+
                                         <label for="question">Question 1 </label>
                                         <input type="text" name="name" id="" class="form-control" required>
                                     </div>
+                                    {{-- set question and answer --}}
                                     <div class="form-group ml-3">
                                         <label for="a">Option</label>
                                         <div class="form-group ml-5">
                                             <label for="name">A</label>
-                                            <input type="text" name="name" id="" class="form-control"
+                                            <input type="text" name="a" id="" class="form-control"
                                                 required>
                                         </div>
                                         <div class="form-group ml-5">
                                             <label for="b">B</label>
-                                            <input type="text" name="name" id="" class="form-control"
+                                            <input type="text" name="b" id="" class="form-control"
                                                 required>
                                         </div>
                                         <div class="form-group ml-5">
                                             <label for="c">C</label>
-                                            <input type="text" name="name" id="" class="form-control"
+                                            <input type="text" name="c" id="" class="form-control"
                                                 required>
                                         </div>
-
-                                        {{-- <button class="form-group btn btn-primary mt-1">Add Option +</button> --}}
+                                        {{-- option choose right answer --}}
                                     </div>
                                     <div class="form-group ml-3">
                                         <label for="name"> Right Answer: </label>
-                                        <select name="" id="" class="form-control bg-primary">
+                                        <select name="right_answer" id="" class="form-control bg-primary">
                                             <option value="Option A">Option A</option>
                                             <option value="Option B">Option B</option>
                                             <option value="Option C">Option C</option>
-                                            {{-- <option value="Option D">Option D</option> --}}
-
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group ml-3">
-                                        <label for="name"> Answer: </label>
-                                        <input type="checkbox" name="" id="">
-                                        <input type="checkbox" name="" id="">
-                                        <input type="checkbox" name="" id="">
 
-
-                                    </div> --}}
 
                                     <button type="submit" class="btn btn-danger"> save</button>
                                 </form>

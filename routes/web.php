@@ -110,4 +110,8 @@ Route::get(
 //save exam to Database
 Route::post('/exam/save/{user_id}', [ExamController::class, 'save'])->name('exam.save')->middleware('auth');
 
+
+//Exam Question
+// Route::post('/exam/question/',)
+
 require __DIR__ . '/auth.php';
