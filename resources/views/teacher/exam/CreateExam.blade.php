@@ -26,11 +26,10 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12" style="display: flex">
+                    <div class="col-12" style="display: flex; flex-wrap: wrap;">
                         @foreach ($exam as $examall)
-                            <div class="card  mt-3 ml-4" style="width: 18rem;">
+                            <div class="card mt-3 ml-4" style="width: 18rem;">
                                 <div class="card-body">
-                                    {{-- {{ dd($exam) }} --}}
                                     <h2 class="card-title" style="color: blue;font-size: 2.5rem">{{ $examall->courseName }}
                                     </h2>
 
@@ -44,10 +43,8 @@
                                             $date = is_string($examall->date)
                                                 ? new \DateTime($examall->date)
                                                 : $examall->date;
-
                                         @endphp
-                                        {{ $date->format('d m Y') }}
-                                        <br>
+                                        {{ $date->format('d m Y') }}<br>
                                         ម៉ោងប្រលង:
                                         @php
                                             $startDate = is_string($examall->startDate)
@@ -58,35 +55,32 @@
                                                 : $examall->endDate;
                                         @endphp
                                         {{ $startDate->format('H:i') }} - {{ $endDate->format('H:i') }}
-
-
                                     </p>
+                                    <div class="action">
+                                        <form action="{{ route('question.update.view', $examall->id) }}" method="POST"
+                                            class="card-link" style="margin-left: 0;">
+                                            @method('PATCH')
+                                            @csrf
+                                            <button type="submit"
+                                                style="text-decoration: none; background: none; border: none; color: inherit; cursor: pointer;color:red">កែរប្រែ</button>
+                                        </form>
+
+                                        <a href="{{ route('question.add', $examall->id) }}" class="card-link"
+                                            style="margin-left: 0;">បន្ដែមសំណួរ</a>
+                                    </div>
 
 
-                                    <a href="#" class="card-link">កែរប្រែ</a>
-                                    <a href="{{ route('question.add') }}" class="card-link">បន្ដែមសំណួរ</a>
+
 
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
-
-                <!-- /.row -->
             </div>
-            <!-- /.container-fluid -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
         </section>
+
+
         <!-- /.content -->
     </div>
-
 @endsection

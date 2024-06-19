@@ -97,26 +97,22 @@ Route::any('/student/login', function () {
 //=============================================================================================
 //exam
 
-//view all exam
+//view all exam\
 Route::get('/exams', [ExamController::class, 'index'])->name('exam.show')->middleware('auth');
 //view to create exam
 Route::get('/exams/add', [ExamController::class, 'create'])->name('exam.add')->middleware('auth');
-//Add question to exam
-
-Route::get('exam/question/', [QuizeAnswerController::class, 'index'])->name('question.add')->middleware('auth');
-// Route::get('exam/question',
-//     function () {
-//         return view('teacher.exam.AddQuestion');
-//     }
-// )->name('question.add');
 
 //save exam to Database
 Route::post('/exam/save/{user_id}', [ExamController::class, 'save'])->name('exam.save')->middleware('auth');
 
 //Save quize
-Route::post('/exam/question/save', [QuizeAnswerController::class, 'create'])->name('quize.create')->middleware('auth');
+Route::post('/exam/question/save/{quize_id}', [QuizeAnswerController::class, 'create'])->name('quize.create')->middleware('auth');
 
-
+//Add question to exam
+Route::get('exam/question/{quize_id}', [QuizeAnswerController::class, 'index'])->name('question.add')->middleware('auth');
+//update Exam and question view
+Route::patch('exam/exam/{exam_id}', [QuizeAnswerController::class, 'updateView'])->name('question.update.view')->middleware('auth');
+Route::patch('exam/exam/update/{exam_id}', [QuizeAnswerController::class, 'update'])->name('question.update.multiple')->middleware('auth');
 
 
 

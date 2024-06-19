@@ -10,17 +10,24 @@ use PHPUnit\Framework\Constraint\Count;
 
 class QuizeAnswerController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $quize_id)
     {
-        $quize_answers = QuizeAnswer::all();
-        $count = count($quize_answers);
+        // Fetch all QuizeAnswer records where quize_id matches $quize_id
+        $quize_answers = QuizeAnswer::where('quize_id', $quize_id)->get();
+
+        // Count the number of fetched records
+        $count = $quize_answers->count();
+        //debugg
         //dd($count);
-        return view('teacher.exam.AddQuestion', compact('quize_answers'));
+        //dd($quize_id);
+        return view('teacher.exam.AddQuestion')
+            ->with('quize_id', $quize_id)
+            ->with('count', $count);
     }
     //
-    public function create(Request $request)
+    public function create(Request $request, $quize_id)
     {
-        $quize = Quize::where('id', Exam::all());
+        // $quize = Quize::where('id', Exam::all());
         // dd($request);
         $data = $request->input('questions');
         foreach ($data as $questionData) {
@@ -30,10 +37,22 @@ class QuizeAnswerController extends Controller
             $question->answer_b = $questionData['answer_b'];
             $question->answer_c = $questionData['answer_c'];
             $question->correct_answer = $questionData['correct_answer'];
-            //$question->exam_id = ;
+            $question->mark = $questionData['mark'];
+
+
+            $question->quize_id = $quize_id;
 
             $question->save();
         }
-        return redirect()->route('exam.add');
+        return redirect()->route('exam.show');
+    }
+    public function updateView(Request $request, $exam_id)
+    {
+        // dd($exam_id);
+        $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
+        //dd($quizeAnswers);
+        return view('teacher.exam.UpdateQuestion')
+            ->with('exam_id', $exam_id)
+            ->with('questions', $quizeAnswers);
     }
 }

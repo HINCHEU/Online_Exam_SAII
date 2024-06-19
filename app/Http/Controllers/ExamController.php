@@ -26,7 +26,6 @@ class ExamController extends Controller
     }
     public function save(Request $request, $user_id)
     {
-
         // Validate the incoming request data
         $validatedData = $request->validate([
             'course_name' => 'required|string|max:255',
@@ -38,6 +37,7 @@ class ExamController extends Controller
             'end_time' => 'required',
             'total_mark' => 'required'
         ]);
+
         // Create a new exam instance and fill it with the validated data
         $exam = new Exam();
         $exam->courseName = $request->input('course_name');
@@ -50,28 +50,27 @@ class ExamController extends Controller
         $exam->created_by = $user_id;
         $exam->type = 'qcm';
 
-
-
-
         // Try to save the exam to the database
         try {
             $exam->save();
 
-            $exam_id = Exam::latest()->first()->id;     //create mark store to quize table
+            // Retrieve the ID of the newly created exam
+            $exam_id = $exam->id;
+
+            // Create a new Quize instance and associate it with the exam
             $quize = new Quize();
             $quize->exam_id = $exam_id;
-            $quize->total_mark = request()->input('total_mark');
+            $quize->total_mark = $request->input('total_mark');
             $quize->save();
         } catch (\Exception $e) {
-            // Log the exception for debuggingi8
-            //logger()->error('Failed to save exam: ' . $e->getMessage());
+            // Log the exception for debugging if needed
+            // logger()->error('Failed to save exam: ' . $e->getMessage());
 
-            // dd($e);
             // Redirect back with an error message
             return redirect()->back()->withInput()->with('error', 'Failed to save exam. Please try again.');
         }
 
-        // If saving succeeds, redirect to the "Question.add" route
-        return redirect()->route('question.add',)->with('success', 'Exam saved successfully.');
+        // If saving succeeds, redirect to the "question.add" route
+        return redirect()->route('question.add', ['quize_id' => $quize->id])->with('success', 'Exam saved successfully.');
     }
 }

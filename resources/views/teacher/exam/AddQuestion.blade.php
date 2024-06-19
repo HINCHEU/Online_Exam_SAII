@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">student </li>
                         </ol>
-                    </div><!-- /.col -->
+                    </div><!-- /.col -->a
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -35,13 +35,16 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('quize.create',) }}" method="POST">
+                                {{-- {{ dd($quize_id) }} --}}
+                                <form action="{{ route('quize.create', $quize_id) }}" method="POST">
                                     @csrf
 
                                     <div id="question-container">
                                         <div class="question-set">
                                             <div class="form-group ml-3">
-                                                <label for="question" style="font-size: 2rem">Question 1</label>
+                                                <label for="question" style="font-size: 2rem">Question
+
+                                                    {{ $count + 1 }}</label>
                                                 <input type="text" name="questions[0][question]" class="form-control"
                                                     required>
                                             </div>
@@ -72,6 +75,11 @@
                                                     <option value="Option C">Option C</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group ml-5">
+                                                <label for="answer_c">Mark:</label>
+                                                <input type="text" name="questions[0][mark]" class="form-control"
+                                                    required>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -84,7 +92,7 @@
                                         const container = document.getElementById('question-container');
                                         const addButton = document.getElementById('add-question');
 
-                                        let questionIndex = 1;
+                                        let questionIndex = {{ $count + 1 }};
 
                                         addButton.addEventListener('click', function() {
                                             const newQuestionSet = document.createElement('div');
@@ -117,6 +125,10 @@
                                                         <option value="Option C">Option C</option>
                                                     </select>
                                                 </div>
+                                                <div class="form-group ml-5">
+                                                        <label for="answer_c">C</label>
+                                                        <input type="text" name="questions[${questionIndex}][mark]" class="form-control" required>
+                                                    </div>
                                             `;
                                             container.appendChild(newQuestionSet);
                                             questionIndex++;
