@@ -4,12 +4,14 @@ use App\Http\Controllers\ForTeacherController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\GroupController;
 use App\Models\User;
 use Faker\Guesser\Name;
 use Illuminate\Routing\Route as RoutingRoute;
 use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuizeAnswerController;
+use App\Models\Group;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -116,6 +118,18 @@ Route::patch('exam/question/update/{exam_id}', [QuizeAnswerController::class, 'u
 //Add question to exam view
 Route::get('exam/question/{quize_id}', [QuizeAnswerController::class, 'index'])->name('question.add')->middleware('auth');
 
+
+//Group view
+Route::get('/group', [GroupController::class, 'index'])->name('group.show')->middleware('auth');
+//create
+Route::get('/group/add', [GroupController::class, 'show'])->name('group.add')->middleware('auth');
+//create
+Route::get('/group/create', [GroupController::class, 'create'])->name('group.create')->middleware('auth');
+//update view
+Route::get('/group/{group_id}', [GroupController::class, 'edit'])->name('group.edit')->middleware('auth');
+//update action
+Route::patch('/group/{group_id}', [GroupController::class, 'update'])->name('group.update')->middleware('auth');
+Route::delete('/group/{group_id}', [GroupController::class, 'delete'])->name('group.delete')->middleware('auth');
 
 //Exam Question
 // Route::post('/exam/question/',)

@@ -6,16 +6,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">student</h1>
+                        <h1 class="m-0">Group</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             {{-- <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">Student </li> --}}
-                            <form id="logout-form" action="" method="GET" style="">
-                                @csrf
-                                <button class="btn " style="background-color: pink">Group</button>
-                            </form>
+
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -26,8 +23,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6">
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
@@ -37,7 +34,7 @@
                                     </div>
 
                                     <div>
-                                        <form id="logout-form" action="{{ route('student.add') }}" method="GET"
+                                        <form id="logout-form" action="{{ route('group.add') }}" method="GET"
                                             style="">
                                             @csrf
                                             <button class="btn btn-primary">+ Add </button>
@@ -45,6 +42,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (session()->has('success'))
+                                <div class="alert alert-success ml-2 mr-2">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -67,40 +69,37 @@
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1"
                                                             aria-label="Browser: activate to sort column ascending">
-                                                            Name
+                                                            Group Name
                                                         </th>
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1"
                                                             aria-label="Browser: activate to sort column ascending">
-                                                            Email
+                                                            Discription
                                                         </th>
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1" style=""
                                                             aria-label="CSS grade: activate to sort column ascending">
-                                                            Password</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example2"
-                                                            rowspan="1" colspan="1" style=""
-                                                            aria-label="CSS grade: activate to sort column ascending">
-                                                            DoB</th>
+                                                            Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1" style=""
                                                             aria-label="CSS grade: activate to sort column ascending">
                                                             Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($students as $student)
+                                                    @foreach ($groups as $group)
                                                         <tr class="">
                                                             <td class="dtr-control sorting_1" tabindex="0">
-                                                                {{ $student->id }}</td>
-                                                            <td>{{ $student->stname }}</td>
-                                                            <td style="">{{ $student->user->email }}</td>
-                                                            <td style="">{{ $student->user->password }}</td>
-                                                            <td style="">
-                                                                {{ date('d-M-Y', strtotime($student->DateOfBirth)) }}</td>
+                                                                {{ $group->id }}</td>
+                                                            <td>{{ $group->name }}</td>
+                                                            <td>{{ $group->desc }}</td>
+                                                            <td>{{ $group->status }}</td>
+
+
                                                             <td style="display: flex;">
-                                                                <form id="updateForm{{ $student->id }}" class="ml-1"
-                                                                    action="{{ route('student.edit', ['student_id' => $student->id]) }}"
+                                                                <form id="updateForm{{ $group->id }}" class="ml-1"
+                                                                    action="{{ route('group.edit', ['group_id' => $group->id]) }}"
                                                                     method="GET">
                                                                     @csrf
                                                                     @method('GET')
@@ -108,14 +107,14 @@
                                                                         class="btn btn-warning">Update</button>
                                                                 </form>
                                                                 <form class="ml-1 deleteForm"
-                                                                    id="deleteForm{{ $student->id }}"
-                                                                    action="{{ route('student.delete', ['student_id' => $student->id]) }}"
+                                                                    id="deleteForm{{ $group->id }}"
+                                                                    action="{{ route('group.delete', ['group_id' => $group->id]) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="button" class="btn btn-danger"
                                                                         data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal{{ $student->id }}">Delete</button>
+                                                                        data-bs-target="#myModal{{ $group->id }}">Delete</button>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -126,8 +125,8 @@
                                             {{-- Module --}}
 
                                             <!-- Modals -->
-                                            @foreach ($students as $student)
-                                                <div class="modal" id="myModal{{ $student->id }}">
+                                            @foreach ($groups as $group)
+                                                <div class="modal" id="myModal{{ $group->id }}">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -142,7 +141,7 @@
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-dismiss="modal">Close</button>
                                                                 <button type="button" class="btn btn-danger"
-                                                                    onclick="deleteStudent('deleteForm{{ $student->id }}')"
+                                                                    onclick="deleteStudent('deleteForm{{ $group->id }}')"
                                                                     data-bs-dismiss="modal">Yes</button>
                                                             </div>
                                                         </div>
@@ -156,7 +155,7 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-5">
                                             <div class="dataTables_info" id="example2_info" role="status"
-                                                aria-live="polite">Showing 1 to 10 </div>
+                                                aria-live="polite">Showing 1 to 1 </div>
                                         </div>
                                         <div class="col-sm-12 col-md-7">
                                             <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">

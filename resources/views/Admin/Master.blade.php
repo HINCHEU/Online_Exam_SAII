@@ -246,14 +246,18 @@
                             <li class="nav-item ">
                                 <a href="{{ url('index') }}"
                                     class="nav-link {{ request()->is('index') ? 'active' : '' }}
-                                ">Dashboard</a>
+                                ">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    Dashboard</a>
                             </li>
                         @endif
 
                         @if (auth::user()->role_id == 1)
                             <li class="nav-item ">
                                 <a href="{{ url('teacher') }}"
-                                    class="nav-link {{ Request::is('teacher') ? 'active' : '' }}">Teacher</a>
+                                    class="nav-link {{ Request::is('teacher') ? 'active' : '' }}">
+                                    <i class="fas fa-chalkboard-teacher mr-2"></i>
+                                    Teacher</a>
                             </li>
                         @endif
 
@@ -263,7 +267,7 @@
                         @if (auth::user()->role_id == 1 || auth::user()->role_id == 3)
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-copy"></i>
+                                    <i class="fas fa-diagnoses mr-2"></i>
                                     <p>
                                         Exam
                                         <i class="fas fa-angle-left right"></i>
@@ -273,30 +277,38 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{ route('exam.show') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="far fa-plus-square nav-icon"></i>
                                             <p>Create Exam</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fas fa-life-ring nav-icon"></i>
                                             <p>Exam Board</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('view.student') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fas fa-user-graduate nav-icon"></i>
                                             <p>Student</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="pages/layout/fixed-sidebar.html" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Fixed Sidebar</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
+                            </li>
+                        @endif
+                        @if (auth::user()->role_id == 1 || auth::user()->role_id == 3)
+                            <li class="nav-item ">
+                                <a href="{{ url('group') }}"
+                                    class="nav-link {{ Request::is('group') ? 'active' : '' }}">
+                                    <i class="fas fa-object-group nav-icon"></i>
+                                    Group</a>
                             </li>
                         @endif
 

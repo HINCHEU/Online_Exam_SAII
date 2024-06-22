@@ -122,6 +122,7 @@ class ExamController extends Controller
             ->with('exam_id', $exam_id)
             ->with('questions', $quizeAnswers)
             ->with('exam', $exam)
-            ->with('quize', $quize);
+            ->with('quize', $quize)
+            ->with('success', "Update exam successfully");
     }
 }
