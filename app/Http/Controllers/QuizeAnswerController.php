@@ -20,6 +20,7 @@ class QuizeAnswerController extends Controller
         //debugg
         //dd($count);
         //dd($quize_id);
+
         return view('teacher.exam.AddQuestion')
             ->with('quize_id', $quize_id)
             ->with('count', $count);
@@ -51,8 +52,47 @@ class QuizeAnswerController extends Controller
         // dd($exam_id);
         $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
         //dd($quizeAnswers);
+        $exam = Exam::where('id', $exam_id)->first();
+        //find quize
+        $quize = Quize::where('id', $exam_id)->first();
+
+        //dd($quize);
         return view('teacher.exam.UpdateQuestion')
             ->with('exam_id', $exam_id)
-            ->with('questions', $quizeAnswers);
+            ->with('questions', $quizeAnswers)
+            ->with('exam', $exam)
+            ->with('quize', $quize);
+    }
+    public function update(Request $request, $exam_id)
+    {
+        $questionsData = $request->input('questions');
+
+        foreach ($questionsData as $question_id => $questionData) {
+            // Find the QuizeAnswer record by its ID
+            $question = QuizeAnswer::findOrFail($question_id);
+
+            // Update the question attributes
+            $question->question_text = $questionData['question'];
+            $question->answer_a = $questionData['answer_a'];
+            $question->answer_b = $questionData['answer_b'];
+            $question->answer_c = $questionData['answer_c'];
+            $question->correct_answer = $questionData['correct_answer'];
+            $question->mark = $questionData['mark'];
+
+            // Save the updated question
+            $question->save();
+        }
+
+        // dd($exam_id);
+        $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
+
+        $exam = Exam::where('id', $exam_id)->first();
+        //find quize
+        $quize = Quize::where('id', $exam_id)->first();
+        return view('teacher.exam.UpdateQuestion')
+            ->with('exam_id', $exam_id)
+            ->with('questions', $quizeAnswers)
+            ->with('exam', $exam)
+            ->with('quize', $quize);
     }
 }

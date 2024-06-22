@@ -25,8 +25,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12" style="display: flex; flex-wrap: wrap;">
+                <div class="row ">
+                    <div class="col-12 " style="display: flex; flex-wrap: wrap;">
                         @foreach ($exam as $examall)
                             <div class="card mt-3 ml-4" style="width: 18rem;">
                                 <div class="card-body">

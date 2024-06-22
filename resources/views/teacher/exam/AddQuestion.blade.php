@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">student </li>
                         </ol>
-                    </div><!-- /.col -->a
+                    </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -23,8 +23,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-5">
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
