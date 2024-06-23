@@ -19,15 +19,7 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid ">
@@ -39,6 +31,15 @@
                                     <h3 class="card-title">Please Input Group Information</h3>
                                 </div>
                             </div>
+                            @if ($errors->any())
+                                <div class="alert alert-danger ml-2 mr-2">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <form action="{{ route('group.update', $group->id) }}" method="POST"
                                     enctype="multipart/form-data">
@@ -68,7 +69,7 @@
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -76,7 +77,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
         </section>
         <!-- /.content -->
     </div>

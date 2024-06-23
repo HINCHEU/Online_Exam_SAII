@@ -23,8 +23,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-5">
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
@@ -56,11 +56,24 @@
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
+                                        <label for="group">Group:</label>
+                                        <select name="group" id="group" class="form-control" required>
+                                            <option value="">Select Gourp</option>
+                                            @foreach ($groups as $group)
+                                                <option name="{{ $group->id }}">
+                                                    {{ $group->id }}
+                                                    {{ $group->name }}
+                                                </option>
+                                            @endforeach
+
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="email">Password:</label>
                                         <input type="text" name="password" id="password" value=""
                                             class="form-control">
                                     </div>
-
                                     <!-- Submit button -->
                                     <button type="submit" class="btn btn-primary">Add</button>
                                 </form>

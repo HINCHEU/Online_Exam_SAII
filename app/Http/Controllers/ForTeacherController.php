@@ -2,23 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use Illuminate\Http\Request;
 use  App\Models\User;
 use App\Models\student;
 use LDAP\Result;
+use Illuminate\Support\Facades\Auth;
 
 class ForTeacherController extends Controller
 {
-    //
+
+
+    // Assuming you're in a controller method
     public function index()
     {
-        $students = Student::where('status', 1)->get();
+        $authUserId = Auth::user()->id; // Get the ID of the currently authenticated user
 
-        return view('teacher.student')->with('students', $students);
+        // Query to retrieve students with status = 1 and created by the authenticated user
+        $students = Student::where('status', 1)
+            ->whereHas('user', function ($query) use ($authUserId) {
+                $query->where('created_by', $authUserId);
+            })
+            ->get();
+
+        // Return or use $students as needed
+        return view('teacher.student', compact('students'));
     }
+
     public function show()
     {
-        return view('teacher.AddStudent');
+        $group = Group::where('created_by', Auth::user()->id)->get();
+        //dd($group);
+        return view('teacher.AddStudent')->with('groups', $group);
     }
     public function create(Request $request)
     {
@@ -77,10 +92,12 @@ class ForTeacherController extends Controller
     function edit(Request $request, $student_id)
     {
         $student = Student::find($student_id);
-
+        $group = Group::where('created_by', Auth::user()->id)->get();
 
         //dd($student);
-        return view('teacher.EditStudent')->with('student', $student);
+        return view('teacher.EditStudent')
+            ->with('student', $student)
+            ->with('groups', $group);
     }
     // Update Student
     public function update(Request $request, $id)
@@ -101,11 +118,12 @@ class ForTeacherController extends Controller
         // Update other fields
         $EditStudent->stname = $request->name;
         $EditStudent->DateOfBirth = $request->DateOfBirth;
-        
+        $EditStudent->gender = $request->gender;
+
         // Save the changes
         $EditStudent->save();
 
         // Redirect back or wherever you want
-        return redirect()->route('view.student');
+        return redirect()->route('view.student')->with('success', 'update succesfully');
     }
 }

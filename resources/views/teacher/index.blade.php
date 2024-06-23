@@ -21,8 +21,11 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <h1>This is Teacher</h1>
+        <div class="alert alert-success mr-2 ml-2" role="alert">
+            Wecome Teacher {{ Auth::user()->name }}
+        </div>
+
         <!-- /.content -->
-        W
+
     </div>
 @endsection

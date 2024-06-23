@@ -23,8 +23,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-5">
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
@@ -49,8 +49,33 @@
                                     <div class="form-group">
                                         <label for="name">Name:</label>
                                         <input type="text" name="name" id="name" value="{{ $student->stname }}"
-                                            class="form-control">
+                                            class="form-control" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="gender">Gender:</label>
+                                        <select name="gender" id="gender" class="form-control" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male" {{ $student->gender == 'Male' ? 'selected' : '' }}>Male
+                                            </option>
+                                            <option value="Female" {{ $student->gender == 'Female' ? 'selected' : '' }}>
+                                                Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="group">Group:</label>
+                                        <select name="group" id="group" class="form-control" required>
+                                            <option value="">Select Group</option>
+                                            @foreach ($groups as $group)
+                                                <option value="{{ $group->id }}"
+                                                    {{ $student->group_id == $group->id ? 'selected' : '' }}>
+                                                    {{ $group->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
+
+
                                     {{-- //image --}}
                                     {{-- <div class="form-group">
                                         <label for="exampleInputFile">File input</label>

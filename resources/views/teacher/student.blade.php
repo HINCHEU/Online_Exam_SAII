@@ -46,6 +46,11 @@
                                 </div>
                             </div>
                             <!-- /.card-header -->
+                            @if (session()->has('success'))
+                                <div class="alert alert-success ml-2 mr-2">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
@@ -77,7 +82,11 @@
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1" style=""
                                                             aria-label="CSS grade: activate to sort column ascending">
-                                                            Password</th>
+                                                            gender</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example2"
+                                                            rowspan="1" colspan="1" style=""
+                                                            aria-label="CSS grade: activate to sort column ascending">
+                                                            Group</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example2"
                                                             rowspan="1" colspan="1" style=""
                                                             aria-label="CSS grade: activate to sort column ascending">
@@ -95,7 +104,8 @@
                                                                 {{ $student->id }}</td>
                                                             <td>{{ $student->stname }}</td>
                                                             <td style="">{{ $student->user->email }}</td>
-                                                            <td style="">{{ $student->user->password }}</td>
+                                                            <td style="">{{ $student->gender }}</td>
+                                                            <td style="">{{ strtoupper($student->group->name) }}</td>
                                                             <td style="">
                                                                 {{ date('d-M-Y', strtotime($student->DateOfBirth)) }}</td>
                                                             <td style="display: flex;">

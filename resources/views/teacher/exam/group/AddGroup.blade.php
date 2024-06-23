@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Update student</h1>
+                        <h1 class="m-0">Add student</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -31,6 +31,15 @@
                                     <h3 class="card-title">Update Group Information</h3>
                                 </div>
                             </div>
+                            @if ($errors->any())
+                                <div class="alert alert-danger ml-2 mr-2">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <form action="{{ route('group.create') }}" method="GET" enctype="multipart/form-data">
                                     @csrf
@@ -56,7 +65,7 @@
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -64,7 +73,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
         </section>
         <!-- /.content -->
     </div>

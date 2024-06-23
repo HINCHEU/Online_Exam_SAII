@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class GroupController extends Controller
 {
@@ -21,27 +22,28 @@ class GroupController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:32',
+            'name' => 'required|max:32|unique:group,name',
             'desc' => 'required|max:200'
         ]);
 
         $group = new Group();
         $group->name = $request->input('name');
         $group->desc = $request->input('desc');
-        $group->status = 1;
+        $group->status = 1; // Assuming default status
         $group->created_by = Auth::user()->id;
 
         if ($group->save()) {
-            $group = Group::where('created_by', Auth::user()->id)->get();
-            // Redirect with success message and ID of the newly created group
+            // Redirect with success message and newly created group ID
             return redirect()->route('group.show')
                 ->with('success', 'Group created successfully!')
-                ->with('groups', $group); // Assuming you need the ID to retrieve the group
+                ->with('group', $group); // Pass the newly created group
         } else {
-            // Handle error case
-            return 'Error';
+            return redirect()->route('group.add')
+                ->withErrors($group->getErrors())
+                ->withInput(); // This will flash old input to the form
         }
     }
+
     public function edit($id)
     {
         $group = Group::where('id', $id)->first();
@@ -49,16 +51,24 @@ class GroupController extends Controller
     }
     public function update(Request $request, $group_id)
     {
+        // Find the group to update
+        $group = Group::findOrFail($group_id);
+
+        // Validate the request input
         $request->validate([
-            'name' => 'required|max:32',
+            'name' => [
+                'required',
+                'max:32',
+                Rule::unique('group', 'name')->ignore($group->id),
+            ],
             'desc' => 'required|max:200',
         ]);
 
-        $group = Group::findOrFail($group_id);
-
+        // Update the group attributes
         $group->name = $request->input('name');
         $group->desc = $request->input('desc');
 
+        // Save the changes and handle the response
         if ($group->save()) {
             return redirect()->route('group.show', ['group_id' => $group->id])
                 ->with('success', 'Group updated successfully!');
