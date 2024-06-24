@@ -62,8 +62,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="group">Group:</label>
-                                        <select name="group" id="group" class="form-control" required>
+                                        <label for="group_id">Groupds:</label>
+                                        <select name="group_id" id="group_id" class="form-control" required>
                                             <option value="">Select Group</option>
                                             @foreach ($groups as $group)
                                                 <option value="{{ $group->id }}"
@@ -73,7 +73,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    
+
+
 
 
                                     {{-- //image --}}

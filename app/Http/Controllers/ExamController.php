@@ -7,16 +7,28 @@ use App\Models\Exam;
 use App\Models\Quize;
 use Illuminate\Support\Facades\Auth;
 use App\Models\QuizeAnswer;
-
+use App\Models\Group;
+use App\Models\AssignExam;
 
 class ExamController extends Controller
 {
     //
+
     public function  index()
     {
         $exam = Exam::where('created_by', Auth::user()->id)->get();
+        $group = Group::where('created_by', Auth::user()->id)->get();
+        $assignedGroups = AssignExam::where('is_assigned', true)
+            ->get()
+            ->groupBy('exam_id')
+            ->map(function ($group) {
+                return $group->unique('group_id');
+            });
 
-        return view('teacher.exam.CreateExam')->with('exam', $exam);
+        return view('teacher.exam.CreateExam')
+            ->with('exams', $exam)
+            ->with('groups', $group)
+            ->with('assignedGroups', $assignedGroups);
     }
 
     public function create()

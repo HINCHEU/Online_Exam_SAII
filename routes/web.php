@@ -12,6 +12,7 @@ use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuizeAnswerController;
 use App\Models\Group;
+use App\Http\Controllers\AssignExamController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,10 +85,13 @@ Route::delete('/teachers/{teacher_id}/delete', [TeacherController::class, 'destr
 ////For teacher  --- CRUDE STUDENT
 Route::get('/Teacher/student', [ForTeacherController::class, 'index'])->name('view.student')->middleware('auth');
 Route::get('/Teacher/add', [ForTeacherController::class, 'show'])->name('student.add')->middleware('auth');
-Route::get('/Teacher/create', [ForTeacherController::class, 'create'])->name('student.create')->middleware('auth');
+Route::post('/Teacher/create', [ForTeacherController::class, 'create'])->name('student.create')->middleware('auth');
 Route::delete('/Teacher/{student_id}/student', [ForTeacherController::class, 'delete'])->name('student.delete')->middleware('auth');
 Route::get('/Teacher/student/{student_id}', [ForTeacherController::class, 'edit'])->name('student.edit')->middleware('auth');
 Route::patch('/Teacher/{student_id}/student', [ForTeacherController::class, 'update'])->name('student.update')->middleware('auth');
+
+
+
 
 
 //For Student
@@ -131,7 +135,9 @@ Route::get('/group/{group_id}', [GroupController::class, 'edit'])->name('group.e
 Route::patch('/group/{group_id}', [GroupController::class, 'update'])->name('group.update')->middleware('auth');
 Route::delete('/group/{group_id}', [GroupController::class, 'delete'])->name('group.delete')->middleware('auth');
 
-//Exam Question
-// Route::post('/exam/question/',)
+//assignt exam vieww
+Route::post('/exam/assign/{examId}', [AssignExamController::class, 'assignGroup'])->name('exam.assign.group');
+Route::delete('/exam/{exam}/unassign-group/{group}', [AssignExamController::class, 'unassignGroup'])->name('exam.unassign.group');
+
 
 require __DIR__ . '/auth.php';

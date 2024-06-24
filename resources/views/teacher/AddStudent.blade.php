@@ -32,18 +32,17 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('student.create') }}" method="GET" enctype="multipart/form-data">
+                                <form action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    @method('GET')
                                     <div class="form-group">
                                         <label for="name">Student Name:</label>
                                         <input type="text" name="stname" id="stname" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Gender</label>
-                                        <select name="gender" id="" class="form-control">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                        <select name="gender" id="gender" class="form-control">
+                                            <option value="male">male</option>
+                                            <option value="female">female</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -57,26 +56,24 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="group">Group:</label>
-                                        <select name="group" id="group" class="form-control" required>
-                                            <option value="">Select Gourp</option>
+                                        <select name="group_id" id="group_id" class="form-control" required>
+                                            <option value="">Select Group</option>
                                             @foreach ($groups as $group)
-                                                <option name="{{ $group->id }}">
-                                                    {{ $group->id }}
-                                                    {{ $group->name }}
+                                                <option value="{{ $group->id }}">{{ $group->name }}
+
                                                 </option>
                                             @endforeach
-
-
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Password:</label>
-                                        <input type="text" name="password" id="password" value=""
-                                            class="form-control">
+                                        <label for="password">Password:</label>
+                                        <input type="password" name="password" id="password" class="form-control">
                                     </div>
                                     <!-- Submit button -->
                                     <button type="submit" class="btn btn-primary">Add</button>
                                 </form>
+
+
 
                             </div>
                         </div>

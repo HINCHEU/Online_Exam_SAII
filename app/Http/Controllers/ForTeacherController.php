@@ -37,43 +37,45 @@ class ForTeacherController extends Controller
     }
     public function create(Request $request)
     {
+
         $request->validate([
             'stname' => 'required|max:32',
             'email' => 'required|unique:App\Models\User,email',
             'gender' => 'required',
             'DateOfBirth' => 'required|date',
             'password' => 'required',
+            'group_id' => 'required', // Validate group_id
         ]);
 
+        // Create a new user
+        $user = new User();
+        $user->name = $request->input('stname');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->role_id = 2; // Assuming Student role id is 2
+        $user->status = 1; // Active status
+        $user->created_by = auth()->user()->id; // Set created_by to the current user
 
-        $users = new user();
-        $users->name = $request->input('stname');
-        $users->email = $request->input('email');
-        $users->password = bcrypt($request->input('password')); //
-        $users->role_id =  2; // Student role id is 2
-        $users->status = 1; //1 ==active
-        $users->created_by = auth()->user()->id; //Assing Created by to the one who created this account
-        //dd($users);
+        if ($user->save()) {
+            // Create a new student linked to the user
+            $student = new Student();
+            $student->stname = $request->input('stname');
+            $student->gender = $request->input('gender');
+            $student->DateOfBirth = $request->input('DateOfBirth');
+            $student->status = 1; // Active status
+            $student->user_id = $user->id; // Assign User Id of the newly created user
+            $student->group_id = $request->input('group_id'); // Assign Group ID from form
 
-        // dd($students);
-        $latest_user = User::latest()->first();
-
-        $students = new Student();
-        $students->stname = $request->input('stname');
-        $students->gender = $request->input('gender'); // Fix gender assignment
-        $DOB = date_create($request->input('DateOfBirth'));
-        $format = "Y-m-d";
-        $DOB = date_format($DOB, $format);
-        $students->DateOfBirth = $DOB;
-        $students->status = 1;
-        $students->user_id =  $latest_user->id + 1; // Assign User Id with lastest User ID
-        // dd($students);
-        if ($users->save() and $students->save()) {
-            return redirect()->route("view.student")->withSuccess('Great! You have successfully added a student');
-        } else {
-            return redirect()->back()->withErrors('Failed to add student'); // Use withErrors to display error messages
+            if ($student->save()) {
+                return redirect()->route("view.student")->withSuccess('Great! You have successfully added a student');
+            } else {
+                return redirect()->route("view.student")->withErrors('Error! Unable to add student');
+            }
         }
+
+        return redirect()->back()->withErrors('Failed to add student');
     }
+
     public function delete(Request $request, $student_id)
     {
         $student = Student::find($student_id);
@@ -119,7 +121,8 @@ class ForTeacherController extends Controller
         $EditStudent->stname = $request->name;
         $EditStudent->DateOfBirth = $request->DateOfBirth;
         $EditStudent->gender = $request->gender;
-
+        $EditStudent->group_id = $request->group_id;
+        
         // Save the changes
         $EditStudent->save();
 
