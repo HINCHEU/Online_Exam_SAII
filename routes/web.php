@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuizeAnswerController;
 use App\Models\Group;
 use App\Http\Controllers\AssignExamController;
+use App\Http\Controllers\AttenceExamController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,10 +50,7 @@ Route::get('/', function () {
 Route::get('/index', [TeacherController::class, 'All_Teacher'])->name('all.teacher')->middleware('auth');
 Route::get('/teacher', [TeacherController::class, 'show'])->name('show')->middleware('auth');
 
-// Student route
-Route::get('/student', function () {
-    return view('student.index');
-})->name('student')->middleware('auth');
+
 
 
 // Profile routes
@@ -94,10 +93,7 @@ Route::patch('/Teacher/{student_id}/student', [ForTeacherController::class, 'upd
 
 
 
-//For Student
-Route::any('/student/login', function () {
-    return view('student.login');
-})->name('student.login');
+
 
 
 //=============================================================================================
@@ -138,6 +134,14 @@ Route::delete('/group/{group_id}', [GroupController::class, 'delete'])->name('gr
 //assignt exam vieww
 Route::post('/exam/assign/{examId}', [AssignExamController::class, 'assignGroup'])->name('exam.assign.group');
 Route::delete('/exam/{exam}/unassign-group/{group}', [AssignExamController::class, 'unassignGroup'])->name('exam.unassign.group');
+
+//Attence Exam Controller
+// Student route
+// Route::get('/student', function () {
+//     return view('student.index');
+// })->name('student')->middleware('auth');
+Route::get('/student', [AttenceExamController::class, 'index'])->name('student')->middleware('auth');
+Route::post('/student/{exam_id}', [AttenceExamController::class, 'show'])->name('student.attence.exam')->middleware('auth');
 
 
 require __DIR__ . '/auth.php';

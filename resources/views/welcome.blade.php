@@ -866,7 +866,7 @@
 
                     </h3>
                     <button>
-                        <a href="{{ route('student.login') }}" class="btn btn-primary scrollto mt-5">Log in As
+                        <a href="{{ url('/login') }}" class="btn btn-primary scrollto mt-5">Log in As
                             Student</a>
                     </button>
                     <h3 style="font-size: 2rem; color: aliceblue; text-align: center;"
