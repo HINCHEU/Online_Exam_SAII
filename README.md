@@ -27,6 +27,9 @@
     ```cmd: 
     php artisan key:generate
     ```
+    ```npm
+    npm install
+    ```
 
 3. Connect Project to database (.env)
 
@@ -35,6 +38,9 @@
     (create mysql database name : online_exam_db )
     ```cmd: 
     php artisan migrate:fresh --seed
+    ```
+    ```npm run dev
+     npm run dev
     ```
     
 

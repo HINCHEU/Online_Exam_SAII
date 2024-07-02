@@ -1,4 +1,5 @@
 @extends('Admin.Master')
+
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -186,18 +187,49 @@
                 </div>
             </div>
             <!-- /.row -->
+        </section>
+        <!-- /.content -->
     </div>
-    <!-- /.container-fluid -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    </section>
-    <!-- /.content -->
-    </div>
+
+    <!-- Script to set minimum date and time dynamically -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = ('0' + (now.getMonth() + 1)).slice(-2);
+            var day = ('0' + now.getDate()).slice(-2);
+            var hours = ('0' + now.getHours()).slice(-2);
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+
+            var currentDate = year + '-' + month + '-' + day;
+            var currentTime = hours + ':' + minutes;
+
+            document.getElementById('date').min = currentDate;
+            document.getElementById('start_time').min = currentTime;
+            document.getElementById('end_time').min = currentTime;
+
+            // Additional validation for time inputs
+            document.getElementById('start_time').addEventListener('input', function() {
+                validateTimeInputs();
+            });
+
+            document.getElementById('end_time').addEventListener('input', function() {
+                validateTimeInputs();
+            });
+
+            function validateTimeInputs() {
+                var startDate = document.getElementById('date').value + 'T' + document.getElementById('start_time')
+                    .value;
+                var endDate = document.getElementById('date').value + 'T' + document.getElementById('end_time')
+                    .value;
+
+                // Ensure end time is not before start time
+                if (startDate && endDate && new Date(endDate) <= new Date(startDate)) {
+                    document.getElementById('end_time').setCustomValidity('End time must be after start time');
+                } else {
+                    document.getElementById('end_time').setCustomValidity('');
+                }
+            }
+        });
+    </script>
 @endsection
