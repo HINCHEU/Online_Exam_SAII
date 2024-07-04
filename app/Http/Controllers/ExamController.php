@@ -47,7 +47,8 @@ class ExamController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
-            'total_mark' => 'required'
+            'total_mark' => 'required',
+            'total_mark' => 'required|integer|min:1',
         ], [
             'date.after_or_equal' => 'Date must be today or later.',
             'end_time.after' => 'End time must be after start time.',

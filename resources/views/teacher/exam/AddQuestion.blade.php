@@ -8,17 +8,16 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Create Exam</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">student </li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
@@ -31,19 +30,25 @@
                                     <h1 class="card-title">
                                         <i class="fas fa-envelope-open-text" style="font-size: 4rem"></i>
                                     </h1>
-
                                 </div>
                             </div>
                             <div class="card-body">
-                                {{-- {{ dd($quize_id) }} --}}
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <form action="{{ route('quize.create', $quize_id) }}" method="POST">
                                     @csrf
-
                                     <div id="question-container">
                                         <div class="question-set">
                                             <div class="form-group ml-3">
                                                 <label for="question" style="font-size: 2rem">Question
-
                                                     {{ $count + 1 }}</label>
                                                 <input type="text" name="questions[0][question]" class="form-control"
                                                     required>
@@ -76,7 +81,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group ml-5">
-                                                <label for="answer_c">Mark:</label>
+                                                <label for="mark">Mark:</label>
                                                 <input type="text" name="questions[0][mark]" class="form-control"
                                                     required>
                                             </div>
@@ -126,37 +131,31 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group ml-5">
-                                                        <label for="answer_c">C</label>
-                                                        <input type="text" name="questions[${questionIndex}][mark]" class="form-control" required>
-                                                    </div>
+                                                    <label for="mark">Mark:</label>
+                                                    <input type="text" name="questions[${questionIndex}][mark]" class="form-control" required>
+                                                </div>
                                             `;
                                             container.appendChild(newQuestionSet);
                                             questionIndex++;
                                         });
                                     });
                                 </script>
-
-
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    </section>
-    <!-- /.content -->
+            <!-- /.container-fluid -->
+            {{-- @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif --}}
+        </section>
+        <!-- /.content -->
     </div>
 @endsection

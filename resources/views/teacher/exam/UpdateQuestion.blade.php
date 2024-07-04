@@ -37,7 +37,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form method="POST" action="{{ route('exam.update', $exam->id) }}">
+                                <form method="POST" action="{{ route('exam.update', $exam->id) }}" id="examForm">
                                     @csrf
                                     @method('PATCH')
 
@@ -78,12 +78,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="end_time" class="mt-3">Total Mark</label>
+                                        <label for="total_mark" class="mt-3">Total Mark</label>
                                         <input type="text" name="total_mark" value="{{ $quize->total_mark }}"
                                             id="total_mark" class="form-control">
                                     </div>
 
-                                    <button class="btn btn-warning" type="submit">update</button>
+                                    <button class="btn btn-warning" type="submit">Update</button>
 
                                 </form>
                                 <hr>
@@ -95,6 +95,7 @@
                                     <h1 class="card-title">
                                         <i class="fas fa-edit" style="font-size: 4rem;"></i> Edit Questions
                                     </h1>
+                                    <h3>Total Marks: <span id="total-question-marks">0</span>/{{ $quize->total_mark }}</h3>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -108,9 +109,12 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ route('question.update.multiple', $exam_id) }}" method="POST">
+                                <form action="{{ route('question.update.multiple', $exam_id) }}" method="POST"
+                                    id="questionsForm">
                                     @csrf
                                     @method('PATCH')
+
+                                    <input type="hidden" name="quiz_total_mark" value="{{ $quize->total_mark }}">
 
                                     @foreach ($questions as $question)
                                         <div class="question-set mb-3">
@@ -166,16 +170,16 @@
                                             <div class="form-group ml-3">
                                                 <label for="mark{{ $question->id }}">Mark:</label>
                                                 <input type="text" name="questions[{{ $question->id }}][mark]"
-                                                    class="form-control"
+                                                    class="form-control question-mark"
                                                     value="{{ old('questions.' . $question->id . '.mark', $question->mark) }}"
-                                                    required>
+                                                    required data-question-total-mark="{{ $question->mark }}">
                                             </div>
                                         </div>
                                     @endforeach
 
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                     <div class="float-sm-right">
-                                        <button type="" class="btn btn-warning">
+                                        <button type="button" class="btn btn-warning">
                                             <a href="{{ route('exam.show') }}" style="color: red">Cancel</a>
                                         </button>
                                     </div>
@@ -205,31 +209,79 @@
             var currentTime = hours + ':' + minutes;
 
             document.getElementById('date').min = currentDate;
-            document.getElementById('start_time').min = currentTime;
-            document.getElementById('end_time').min = currentTime;
 
             // Additional validation for time inputs
-            document.getElementById('start_time').addEventListener('input', function() {
-                validateTimeInputs();
-            });
-
-            document.getElementById('end_time').addEventListener('input', function() {
-                validateTimeInputs();
-            });
+            document.getElementById('date').addEventListener('input', validateTimeInputs);
+            document.getElementById('start_time').addEventListener('input', validateTimeInputs);
+            document.getElementById('end_time').addEventListener('input', validateTimeInputs);
 
             function validateTimeInputs() {
-                var startDate = document.getElementById('date').value + 'T' + document.getElementById('start_time')
-                    .value;
-                var endDate = document.getElementById('date').value + 'T' + document.getElementById('end_time')
-                    .value;
+                var selectedDate = document.getElementById('date').value;
+                var startTime = document.getElementById('start_time').value;
+                var endTime = document.getElementById('end_time').value;
+
+                var now = new Date();
+                var startDateTime = new Date(selectedDate + 'T' + startTime);
+                var endDateTime = new Date(selectedDate + 'T' + endTime);
+                var nowDateTime = new Date();
+
+                // Ensure start time is not in the past if the selected date is today
+                if (selectedDate === currentDate && startDateTime < nowDateTime) {
+                    document.getElementById('start_time').setCustomValidity(
+                        'Start time must be in the future for today');
+                } else {
+                    document.getElementById('start_time').setCustomValidity('');
+                }
 
                 // Ensure end time is not before start time
-                if (startDate && endDate && new Date(endDate) <= new Date(startDate)) {
+                if (startTime && endTime && endDateTime <= startDateTime) {
                     document.getElementById('end_time').setCustomValidity('End time must be after start time');
                 } else {
                     document.getElementById('end_time').setCustomValidity('');
                 }
             }
+
+            // Form submission handling for the "Save Changes" button
+            document.querySelector('.btn-primary').addEventListener('click', function(event) {
+                if (!validateTotalMarks()) {
+                    event.preventDefault();
+                }
+            });
+
+            // Update total question marks on input change
+            document.querySelectorAll('.question-mark').forEach(function(markInput) {
+                markInput.addEventListener('input', updateTotalQuestionMarks);
+            });
+
+            function updateTotalQuestionMarks() {
+                var totalQuestionMarks = 0;
+                document.querySelectorAll('.question-mark').forEach(function(markInput) {
+                    totalQuestionMarks += parseInt(markInput.value) || 0;
+                });
+                document.getElementById('total-question-marks').textContent = totalQuestionMarks;
+            }
+
+            function validateTotalMarks() {
+                var totalQuizMark = parseInt(document.getElementById('total_mark').value) || 0;
+                var totalQuestionMarks = 0;
+
+                var markInputs = document.querySelectorAll('.question-mark');
+                markInputs.forEach(function(markInput) {
+                    totalQuestionMarks += parseInt(markInput.value) || 0;
+                });
+
+                console.log("Total Quiz Mark: " + totalQuizMark);
+                console.log("Total Question Marks: " + totalQuestionMarks);
+
+                if (totalQuestionMarks !== totalQuizMark) {
+                    alert('Total marks of all questions must equal Total Quiz Mark');
+                    return false;
+                }
+                return true;
+            }
+
+            // Initial update of total question marks
+            updateTotalQuestionMarks();
         });
     </script>
 @endsection

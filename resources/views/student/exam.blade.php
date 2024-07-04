@@ -49,11 +49,11 @@
                                 </div>
                             </div>
                         </div>
-                        <form method="POST" action="">
+                        <form id="examForm" method="POST" action="{{ route('exam.submit') }}">
                             @csrf
                             <input type="hidden" name="exam_id" value="{{ $exam->id }}">
 
-                            @foreach ($questions as $question)
+                            @foreach ($questions as $index => $question)
                                 <div class="card mt-3 card-question">
                                     <div class="card-header">
                                         <h4>Question {{ $loop->iteration }}</h4>
@@ -65,7 +65,8 @@
                                             <label>Options:</label><br>
                                             <div>
                                                 <input type="radio" id="option_a_{{ $question->id }}"
-                                                    name="answers[{{ $question->id }}]" value="Option A">
+                                                    name="answers[{{ $question->id }}]" value="Option A"
+                                                    {{ $index == 0 ? 'checked' : '' }}>
                                                 <label
                                                     for="option_a_{{ $question->id }}">{{ $question->answer_a }}</label>
                                             </div>
@@ -77,7 +78,7 @@
                                             </div>
                                             <div>
                                                 <input type="radio" id="option_c_{{ $question->id }}"
-                                                    name="answers[{{ $question->id }}]}" value="Option C">
+                                                    name="answers[{{ $question->id }}]" value="Option C">
                                                 <label
                                                     for="option_c_{{ $question->id }}">{{ $question->answer_c }}</label>
                                             </div>
@@ -114,9 +115,10 @@
 
             document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
 
-            if (distance < 0) {
+            if (distance <= 0) {
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "EXPIRED";
+                document.getElementById("examForm").submit(); // Submit the form
             }
         }
 

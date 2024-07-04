@@ -14,7 +14,7 @@ use App\Http\Controllers\QuizeAnswerController;
 use App\Models\Group;
 use App\Http\Controllers\AssignExamController;
 use App\Http\Controllers\AttenceExamController;
-
+use App\Http\Controllers\ResultController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -143,5 +143,11 @@ Route::delete('/exam/{exam}/unassign-group/{group}', [AssignExamController::clas
 Route::get('/student', [AttenceExamController::class, 'index'])->name('student')->middleware('auth');
 Route::post('/student/{exam_id}', [AttenceExamController::class, 'show'])->name('student.attence.exam')->middleware('auth');
 
+Route::post('/exam/submit', [AttenceExamController::class, 'submit'])->name('exam.submit')->middleware('auth');
+Route::get('/exam/result/{exam}', [AttenceExamController::class, 'result'])->name('exam.result')->middleware('auth');
+// routes/web.php
+Route::post('/student/caalculate-score', [AttenceExamController::class, 'calculateScore'])->name('student.calculate.score');
+////View Score
+Route::get('/exam/result', [ResultController::class, 'index'])->name('exam.result');
 
 require __DIR__ . '/auth.php';

@@ -74,8 +74,8 @@
 
                                     <div class="form-group">
                                         <label for="total_mark" class="mt-3">Total Mark:</label>
-                                        <input type="text" name="total_mark" id="total_mark" class="form-control"
-                                            required>
+                                        <input type="number" name="total_mark" id="total_mark" class="form-control"
+                                            min="1" required>
                                     </div>
 
                                     <button class="btn btn-primary" type="submit">Submit</button>
@@ -114,32 +114,39 @@
             var currentDate = year + '-' + month + '-' + day;
             var currentTime = hours + ':' + minutes;
 
-            document.getElementById('date').min = currentDate;
-            document.getElementById('start_time').min = currentTime;
-            document.getElementById('end_time').min = currentTime;
+            var dateInput = document.getElementById('date');
+            var startTimeInput = document.getElementById('start_time');
+            var endTimeInput = document.getElementById('end_time');
 
-            // Additional validation for time inputs
-            document.getElementById('start_time').addEventListener('input', function() {
-                validateTimeInputs();
-            });
+            dateInput.min = currentDate;
 
-            document.getElementById('end_time').addEventListener('input', function() {
+            function updateStartTimeLimit() {
+                if (dateInput.value === currentDate) {
+                    startTimeInput.min = currentTime;
+                } else {
+                    startTimeInput.min = '';
+                }
                 validateTimeInputs();
-            });
+            }
+
+            dateInput.addEventListener('change', updateStartTimeLimit);
+            startTimeInput.addEventListener('input', validateTimeInputs);
+            endTimeInput.addEventListener('input', validateTimeInputs);
 
             function validateTimeInputs() {
-                var startDate = document.getElementById('date').value + 'T' + document.getElementById('start_time')
-                    .value;
-                var endDate = document.getElementById('date').value + 'T' + document.getElementById('end_time')
-                    .value;
+                var startDate = dateInput.value + 'T' + startTimeInput.value;
+                var endDate = dateInput.value + 'T' + endTimeInput.value;
 
                 // Ensure end time is not before start time
                 if (startDate && endDate && new Date(endDate) <= new Date(startDate)) {
-                    document.getElementById('end_time').setCustomValidity('End time must be after start time');
+                    endTimeInput.setCustomValidity('End time must be after start time');
                 } else {
-                    document.getElementById('end_time').setCustomValidity('');
+                    endTimeInput.setCustomValidity('');
                 }
             }
+
+            // Initialize validation on page load
+            updateStartTimeLimit();
         });
     </script>
 @endsection
