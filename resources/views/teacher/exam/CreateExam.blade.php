@@ -7,12 +7,18 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Create Exam</h1>
+                        <h1 class="m-0">
+                            {{-- Create Exam --}}
+                            ការប្រលង
+                        </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <button class="btn btn-primary">
-                                <a href="{{ route('exam.add') }}" style="color: white">Add Exam</a>
+                                <a href="{{ route('exam.add') }}" style="color: white">
+                                    {{-- Add Exam --}}
+                                    បន្ងែមការប្រលង
+                                </a>
                             </button>
                         </ol>
                     </div><!-- /.col -->
@@ -63,14 +69,15 @@
                                                 @method('PATCH')
                                                 @csrf
                                                 <button type="submit"
-                                                    style="text-decoration: none; background: none; border: none; color: inherit; cursor: pointer;color:red">កែរប្រែ</button>
+                                                    style="text-decoration: none; background: none; border: none; color: inherit; cursor: pointer;color:red">
+                                                    កែរប្រែ</button>
                                             </form>
 
                                             <a href="{{ route('question.add', $examall->id) }}" class="card-link"
                                                 style="margin-left: 0;">បន្ដែមសំណួរ</a>​ <br>
                                             <!-- Link to trigger the modal -->
                                             <a href="#" class="card-link" style="margin-left: 0;" data-toggle="modal"
-                                                data-target="#assignGroupModal-{{ $examall->id }}">Assign Group</a>
+                                                data-target="#assignGroupModal-{{ $examall->id }}">ប្រគល់ក្រុម</a>
                                         </div>
 
                                         <!-- Modal -->
@@ -136,9 +143,9 @@
                             @endforeach
                         @else
                             <div class="alert alert-primary" role="alert">
-                                You don't have an Exam yet. <a href="{{ route('exam.add') }}" class="alert-link">Create
-                                    one</a>.
-                                Give it a click if you like.
+                                អ្នកមិនទាន់មានការប្រលងទេ <a href="{{ route('exam.add') }}"
+                                    class="alert-link">បង្កើតមួយ</a>.
+                                សាកមើល😊
                             </div>
                         @endif
                     </div>

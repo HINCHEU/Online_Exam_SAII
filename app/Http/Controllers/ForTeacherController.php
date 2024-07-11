@@ -57,6 +57,7 @@ class ForTeacherController extends Controller
         $user->created_by = auth()->user()->id; // Set created_by to the current user
 
         if ($user->save()) {
+            $user->sendEmailVerificationNotification();
             // Create a new student linked to the user
             $student = new Student();
             $student->stname = $request->input('stname');
@@ -122,7 +123,7 @@ class ForTeacherController extends Controller
         $EditStudent->DateOfBirth = $request->DateOfBirth;
         $EditStudent->gender = $request->gender;
         $EditStudent->group_id = $request->group_id;
-        
+
         // Save the changes
         $EditStudent->save();
 

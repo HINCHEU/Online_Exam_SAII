@@ -24,7 +24,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-10">
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
@@ -54,9 +54,12 @@
                                         <div class="col-sm-12 col-md-6"></div>
                                         <div class="col-sm-12 col-md-6"></div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
+
+
+                                    <div class="row" style="width:100%">
+                                        <div class="col-md-12 col-md-8">
                                             <div class="table-responsive">
+
                                                 <table id="example2"
                                                     class="table table-bordered table-striped  table-hover dataTable dtr-inline collapsed"
                                                     aria-describedby="example2_info">
@@ -66,25 +69,32 @@
                                                                 aria-controls="example2" rowspan="1" colspan="1"
                                                                 aria-sort="ascending"
                                                                 aria-label="Rendering engine: activate to sort column descending">
-                                                                Id</th>
+                                                                លេខរាង</th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1"
                                                                 aria-label="Browser: activate to sort column ascending">
-                                                                Group Name
+                                                                {{-- Group Name --}}
+                                                                ឈ្មោះក្រុម
                                                             </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1"
                                                                 aria-label="Browser: activate to sort column ascending">
-                                                                Discription
+                                                                {{-- Discription --}}
+                                                                ពត៌មានលម្អិត
                                                             </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                Status</th>
+                                                                {{-- Status --}}
+                                                                ស្ថានភាព
+                                                            </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                Action</th>
+                                                                {{-- Action --}}
+                                                                សម្គាល់
+
+                                                            </th>
 
                                                         </tr>
                                                     </thead>
@@ -92,7 +102,7 @@
                                                         @foreach ($groups as $group)
                                                             <tr class="">
                                                                 <td class="dtr-control sorting_1" tabindex="0">
-                                                                    {{ $group->id }}</td>
+                                                                    {{ $loop->index + 1 }}</td>
                                                                 <td>{{ $group->name }}</td>
                                                                 <td>{{ $group->desc }}</td>
                                                                 <td>{{ $group->status }}</td>

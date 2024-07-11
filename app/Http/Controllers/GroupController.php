@@ -22,8 +22,17 @@ class GroupController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:32|unique:group,name',
-            'desc' => 'required|max:200'
+            'name' => [
+                'required',
+                'max:32',
+                function ($attribute, $value, $fail) {
+                    $userId = Auth::id();
+                    if (Group::where('name', $value)->where('created_by', $userId)->exists()) {
+                        $fail('The ' . $attribute . ' has already been taken by you.');
+                    }
+                },
+            ],
+            'desc' => 'required|max:200',
         ]);
 
         $group = new Group();

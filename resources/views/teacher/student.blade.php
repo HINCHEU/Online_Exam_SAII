@@ -55,7 +55,7 @@
                             <div class="card-body">
                                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-12">
                                             <div class="table-responsive">
                                                 <table id="example2"
                                                     class="table table-bordered table-striped table-hover dataTable dtr-inline collapsed"
@@ -66,40 +66,50 @@
                                                                 aria-controls="example2" rowspan="1" colspan="1"
                                                                 aria-sort="ascending"
                                                                 aria-label="Rendering engine: activate to sort column descending">
-                                                                Id</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="example2"
-                                                                rowspan="1" colspan="1"
-                                                                aria-label="Browser: activate to sort column ascending">
-                                                                Name
+                                                                {{-- Id --}}
+                                                                លេខរៀង
                                                             </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1"
                                                                 aria-label="Browser: activate to sort column ascending">
-                                                                Email
+                                                                {{-- Name --}}
+                                                                ឈ្មោះសិស្ស
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Browser: activate to sort column ascending">
+                                                                {{-- Email --}}
+                                                                អ៊ីមែលសិស្ស
                                                             </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                Gender</th>
+                                                                {{-- Gender --}}
+                                                                ភេទ
+                                                            </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                Group</th>
+                                                                {{-- Group --}}
+                                                                ក្រុម
+                                                            </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                DoB</th>
+                                                                {{-- DoB --}}
+                                                                ថ្ងៃខែឆ្នាំកំណើត
+                                                            </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
-                                                                Action</th>
+                                                                សម្គាល់</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($students as $student)
                                                             <tr class="">
                                                                 <td class="dtr-control sorting_1" tabindex="0">
-                                                                    {{ $student->id }}</td>
+                                                                    {{ $loop->index + 1 }}</td>
                                                                 <td>{{ $student->stname }}</td>
                                                                 <td style="">{{ $student->user->email }}</td>
                                                                 <td style="">{{ $student->gender }}</td>

@@ -855,25 +855,20 @@
         @endif
         <div class="container text-center">
             <div class="row align-items-start">
-                <div class="col-6 ">
-                    <h3 style="font-size: 2rem; color: aliceblue; text-align: center;"
-                        class="d-flex justify-content-center align-items-center">
+                <div class="col-8">
 
-                    </h3>
-                    <h3 style="font-size: 3rem; color: aliceblue; text-align: center;"
+                    <h3 style="font-size: 4rem; color: aliceblue; text-align: center;font-weight:bold;"
                         class="d-flex justify-content-center align-items-center mt-3">
-                        Welcome <br> to our online Exam System
+                        Welcome to our <br>online Exam System
 
                     </h3>
                     <button>
                         <a href="{{ url('/login') }}" class="btn btn-primary scrollto mt-5">Log in As
                             Student</a>
                     </button>
-                    <h3 style="font-size: 2rem; color: aliceblue; text-align: center;"
-                        class="d-flex justify-content-center align-items-center">
-                    </h3>
+
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <img src="{{ asset('logo/Exams-bro.png') }}" style="max-width: 90%;" alt="">
                 </div>
             </div>
