@@ -15,6 +15,7 @@ use App\Models\Group;
 use App\Http\Controllers\AssignExamController;
 use App\Http\Controllers\AttenceExamController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\PDFController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -135,11 +136,8 @@ Route::delete('/group/{group_id}', [GroupController::class, 'delete'])->name('gr
 Route::post('/exam/assign/{examId}', [AssignExamController::class, 'assignGroup'])->name('exam.assign.group');
 Route::delete('/exam/{exam}/unassign-group/{group}', [AssignExamController::class, 'unassignGroup'])->name('exam.unassign.group');
 
-//Attence Exam Controller
-// Student route
-// Route::get('/student', function () {
-//     return view('student.index');
-// })->name('student')->middleware('auth');
+
+//student view
 Route::get('/student', [AttenceExamController::class, 'index'])->name('student')->middleware('auth');
 Route::post('/student/{exam_id}', [AttenceExamController::class, 'show'])->name('student.attence.exam')->middleware('auth');
 
@@ -148,6 +146,12 @@ Route::get('/exam/result/{exam}', [AttenceExamController::class, 'result'])->nam
 // routes/web.php
 Route::post('/student/caalculate-score', [AttenceExamController::class, 'calculateScore'])->name('student.calculate.score');
 ////View Score
-Route::get('/exam/result', [ResultController::class, 'index'])->name('exam.result');
+Route::get('/exam/result', [ResultController::class, 'showStudentScores'])->name('exam.result');
+Route::get('/result', [ResultController::class, 'showStudentScores'])->name('result');
+
+
+//pdf
+// Route
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 
 require __DIR__ . '/auth.php';
