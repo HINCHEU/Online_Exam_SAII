@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Attempt the test</h1>
+                        <h1 class="m-0">ការប្រលង</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -33,19 +33,19 @@
                         <div class="card">
                             <div class="card-header">
                                 <h1 class="card-title">
-                                    <i class="fas fa-edit"></i> Course Name: {{ $exam->courseName }} <br>
-                                    <i class="ml-4">| Time:</i>
+                                    <i class="fas fa-edit"></i> មុខវិជ្ជា: {{ $exam->courseName }} <br>
+                                    <i class="ml-4">| ម៉ោង:</i>
                                     <span id="countdown" style="font-size: 1.5rem;color:red"></span>
                                 </h1>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Description: {{ $exam->description }}</label><br>
-                                    <label>Instruction: {{ $exam->instruction }}</label><br>
-                                    <label>Topic: {{ $exam->topic }}</label><br>
-                                    <label>Date: {{ $exam->date }}</label><br>
-                                    <label>Exam Time: {{ $exam->startDate }} - {{ $exam->endDate }}</label><br>
-                                    <label>Total Mark: {{ $exam->total_mark }}</label>
+                                    <label>អំពី: {{ $exam->description }}</label><br>
+                                    <label>ការណែនាំ: {{ $exam->instruction }}</label><br>
+                                    <label>ប្រធាន: {{ $exam->topic }}</label><br>
+                                    <label>កាលបរិច្ឆេទ: {{ $exam->date }}</label><br>
+                                    <label>ម៉ោង: {{ $exam->startDate }} - {{ $exam->endDate }}</label><br>
+                                    <label>ពិន្នុ: {{ $exam->total_mark }}</label>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                             @endforeach
 
                             <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary">Submit Answers</button>
+                                <button type="submit" class="btn btn-primary">បញ្ចប់ការប្រលង</button>
                             </div>
                         </form>
                     </div>

@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Update Exam Information</h1>
+                        <h1 class="m-0">កែសម្រួលព័ត៌មានការប្រលង</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -31,7 +31,11 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
                                     <h1 class="card-title">
-                                        <i class="fas fa-edit" style="font-size: 4rem;"></i> Edit Exam
+                                        <i class="fas fa-edit" style="font-size: 3rem;">
+                                            <span style="font-family: 'Kantumruy Pro', sans-serif;font-weight: bold;">
+                                                កែសម្រួលប្រលង
+                                            </span>
+                                        </i>
                                     </h1>
                                 </div>
                             </div>
@@ -42,43 +46,43 @@
                                     @method('PATCH')
 
                                     <div class="form-group">
-                                        <label for="course_name" class="mt-3">Course Name:</label>
+                                        <label for="course_name" class="mt-3">មុខវជ្ជា:</label>
                                         <input type="text" name="course_name" value="{{ $exam->courseName }}"
                                             id="course_name" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="description" class="mt-3">Description:</label>
+                                        <label for="description" class="mt-3">អំពីប្រលង:</label>
                                         <input type="text" name="description" value="{{ $exam->description }}"
                                             id="description" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="instruction" class="mt-3">Instruction:</label>
+                                        <label for="instruction" class="mt-3">ការណែរនាំ:</label>
                                         <input type="text" name="instruction" value="{{ $exam->instruction }}"
                                             id="instruction" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="topic" class="mt-3">Topic:</label>
+                                        <label for="topic" class="mt-3">ប្រធាន:</label>
                                         <input type="text" name="topic" id="topic" value="{{ $exam->topic }}"
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="date" class="mt-3">Date:</label>
+                                        <label for="date" class="mt-3">កាលបរិច្ឆេទ:</label>
                                         <input type="date" name="date" value="{{ $exam->date }}" id="date"
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="start_time" class="mt-3">Start Time:</label>
+                                        <label for="start_time" class="mt-3">ម៉ោងចាប់ផ្ដើប:</label>
                                         <input type="time" name="start_time" value="{{ $exam->startDate }}"
                                             id="start_time" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="end_time" class="mt-3">End Time:</label>
+                                        <label for="end_time" class="mt-3">ម៉ោងបញ្ជប់:</label>
                                         <input type="time" value="{{ $exam->endDate }}" name="end_time" id="end_time"
                                             class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_mark" class="mt-3">Total Mark</label>
+                                        <label for="total_mark" class="mt-3">ពិន្ទុសរុប</label>
                                         <input type="text" name="total_mark" value="{{ $quize->total_mark }}"
                                             id="total_mark" class="form-control">
                                     </div>
@@ -93,9 +97,14 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
                                     <h1 class="card-title">
-                                        <i class="fas fa-edit" style="font-size: 4rem;"></i> Edit Questions
+                                        <i class="fas fa-edit" style="font-size: 2.5rem;">
+                                            <span style="font-family: 'Kantumruy Pro', sans-serif;font-weight: bold;">
+                                                កែប្រែពិន្ទុ
+                                            </span>
+                                        </i>
+
                                     </h1>
-                                    <h3>Total Marks: <span id="total-question-marks">0</span>/{{ $quize->total_mark }}</h3>
+                                    <h3>ពិន្ទុរសរុប: <span id="total-question-marks">0</span>/{{ $quize->total_mark }}</h3>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -121,7 +130,7 @@
                                             <input type="hidden" name="question_ids[]" value="{{ $question->id }}">
 
                                             <div class="form-group ml-3">
-                                                <label for="question{{ $question->id }}" style="font-size: 2rem">Question
+                                                <label for="question{{ $question->id }}" style="font-size: 2rem">សំណូរ
                                                     {{ $loop->iteration }}</label>
                                                 <input type="text" name="questions[{{ $question->id }}][question]"
                                                     class="form-control"
@@ -129,7 +138,7 @@
                                                     required>
                                             </div>
                                             <div class="form-group ml-3">
-                                                <label>Options:</label>
+                                                <label>ជម្រើស:</label>
                                                 <div class="form-group ml-5">
                                                     <label for="answer_a{{ $question->id }}">A</label>
                                                     <input type="text" name="questions[{{ $question->id }}][answer_a]"
@@ -158,17 +167,17 @@
                                                     class="form-control bg-primary" required>
                                                     <option value="Option A"
                                                         {{ $question->correct_answer === 'Option A' ? 'selected' : '' }}>
-                                                        Option A</option>
+                                                        ជម្រើស A</option>
                                                     <option value="Option B"
                                                         {{ $question->correct_answer === 'Option B' ? 'selected' : '' }}>
-                                                        Option B</option>
+                                                        ជម្រើស B</option>
                                                     <option value="Option C"
                                                         {{ $question->correct_answer === 'Option C' ? 'selected' : '' }}>
-                                                        Option C</option>
+                                                        ជម្រើស C</option>
                                                 </select>
                                             </div>
                                             <div class="form-group ml-3">
-                                                <label for="mark{{ $question->id }}">Mark:</label>
+                                                <label for="mark{{ $question->id }}">ពិន្ទុ:</label>
                                                 <input type="text" name="questions[{{ $question->id }}][mark]"
                                                     class="form-control question-mark"
                                                     value="{{ old('questions.' . $question->id . '.mark', $question->mark) }}"
@@ -177,10 +186,10 @@
                                         </div>
                                     @endforeach
 
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary">រក្សាទុកកាផ្លាល់ប្ដូរ</button>
                                     <div class="float-sm-right">
                                         <button type="button" class="btn btn-warning">
-                                            <a href="{{ route('exam.show') }}" style="color: red">Cancel</a>
+                                            <a href="{{ route('exam.show') }}" style="color: red">បោះបង់</a>
                                         </button>
                                     </div>
 

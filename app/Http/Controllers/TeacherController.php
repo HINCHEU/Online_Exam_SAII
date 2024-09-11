@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Exam;
 
 class TeacherController extends Controller
 {
@@ -14,7 +15,15 @@ class TeacherController extends Controller
     {
         $Teachers = Teacher::where('role_id', '3')->get();
         $AllTeacher = count($Teachers);
-        return view('Admin.index')->with('AllTeacher', $AllTeacher);
+        $students = Teacher::where('role_id', '2')->get();
+        $Allstudent = count($students);
+        $Exams = Exam::all();
+        $Allexams = count($Exams);
+
+        return view('Admin.index')
+            ->with('AllTeacher', $AllTeacher)
+            ->with('AllExam', $Allexams)
+            ->with('AllStudent', $Allstudent);
     }
     public function show()
     {
@@ -64,5 +73,4 @@ class TeacherController extends Controller
         $teacher->delete();
         return redirect()->route('show');
     }
-    
 }

@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Upadte Student</h1>
+                        <h1 class="m-0">កែប្រែសិស្ស</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,12 +28,9 @@
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">Student List</h3>
+                                    <h3 class="card-title">បញ្ជីសិស្ស</h3>
                                     <div>
-                                        <form id="logout-form" action="" method="GET" style="">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </form>
+
                                     </div>
 
                                 </div>
@@ -47,24 +44,24 @@
 
                                     <!-- Displaying EditTeacher's information -->
                                     <div class="form-group">
-                                        <label for="name">Name:</label>
+                                        <label for="name">ឈ្មោះ:</label>
                                         <input type="text" name="name" id="name" value="{{ $student->stname }}"
                                             class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="gender">Gender:</label>
+                                        <label for="gender">ភេទ:</label>
                                         <select name="gender" id="gender" class="form-control" required>
-                                            <option value="">Select Gender</option>
-                                            <option value="Male" {{ $student->gender == 'Male' ? 'selected' : '' }}>Male
+                                            <option value="">ជ្រើសរើសភេទ</option>
+                                            <option value="Male" {{ $student->gender == 'Male' ? 'selected' : '' }}>ប្រុស
                                             </option>
                                             <option value="Female" {{ $student->gender == 'Female' ? 'selected' : '' }}>
-                                                Female</option>
+                                                ស្រី</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="group_id">Groupds:</label>
+                                        <label for="group_id">ក្រុម:</label>
                                         <select name="group_id" id="group_id" class="form-control" required>
-                                            <option value="">Select Group</option>
+                                            <option value="">ជ្រើសរើសក្រុម</option>
                                             @foreach ($groups as $group)
                                                 <option value="{{ $group->id }}"
                                                     {{ $student->group_id == $group->id ? 'selected' : '' }}>
@@ -91,7 +88,7 @@
                                             style="display: none; max-width: 10%; margin-top: 10px;">
                                     </div> --}}
                                     <div class="form-group">
-                                        <label for="DateOfBirth">Date Of Birth:</label>
+                                        <label for="DateOfBirth">កាលបិច្ឆេទកំណើត:</label>
                                         <input type="date" name="DateOfBirth" id="status"
                                             value="{{ date('Y-m-d', strtotime($student->DateOfBirth)) }}"
                                             class="form-control">
@@ -99,7 +96,7 @@
 
 
                                     <!-- Submit button -->
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary float-right">បញ្ចាក់ការកែប្រែ</button>
                                 </form>
 
                             </div>

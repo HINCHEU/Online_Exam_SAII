@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Updates student</h1>
+                        <h1 class="m-0">កែប្រែក្រុម</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
                         <div class="card">
                             <div class="card-header ">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">Please Input Group Information</h3>
+                                    <h3 class="card-title">កែប្រែព័ត៌មានរបស់ក្រុម</h3>
                                 </div>
                             </div>
                             @if ($errors->any())
@@ -46,18 +46,18 @@
                                     @csrf
                                     @method('PATCH')
                                     <div class="form-group">
-                                        <label for="name">Group Name:</label>
+                                        <label for="name">ឈ្មោះក្រុម:</label>
                                         <input type="text" name="name" id="name" value="{{ $group->name }}"
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Description:</label>
+                                        <label for="name">អំពី:</label>
                                         <input type="text" name="desc" value="{{ $group->desc }}" id="desc"
                                             class="form-control">
                                     </div>
 
                                     <!-- Submit button -->
-                                    <button type="submit" class="btn btn-primary">update</button>
+                                    <button type="submit" class="btn btn-warning float-right">កែប្រែ</button>
                                 </form>
 
                             </div>

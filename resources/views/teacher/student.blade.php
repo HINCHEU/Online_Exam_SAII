@@ -6,16 +6,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">student</h1>
+                        <h1 class="m-0">សិស្ស</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             {{-- <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">Student </li> --}}
-                            <form id="logout-form" action="" method="GET" style="">
-                                @csrf
-                                <button class="btn " style="background-color: pink">Group</button>
-                            </form>
+
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -40,7 +37,9 @@
                                         <form id="logout-form" action="{{ route('student.add') }}" method="GET"
                                             style="">
                                             @csrf
-                                            <button class="btn btn-primary">+ Add </button>
+                                            <button
+                                                class="btn btn-primary"​style="font-family: 'Kantumruy Pro', sans-serif;font-weight: bold;">
+                                                + ចុះឈ្មោះសិស្ស </button>
                                         </form>
                                     </div>
                                 </div>
@@ -125,7 +124,7 @@
                                                                         @csrf
                                                                         @method('GET')
                                                                         <button type="submit"
-                                                                            class="btn btn-warning">Update</button>
+                                                                            class="btn btn-warning">កែប្រែ</button>
                                                                     </form>
                                                                     <form class="ml-1 deleteForm"
                                                                         id="deleteForm{{ $student->id }}"
@@ -135,7 +134,7 @@
                                                                         @method('DELETE')
                                                                         <button type="button" class="btn btn-danger"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#myModal{{ $student->id }}">Delete</button>
+                                                                            data-bs-target="#myModal{{ $student->id }}">លុប</button>
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -149,19 +148,20 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Confirm Delete</h4>
+                                                                <h4 class="modal-title">បញ្ជាក់ការលុប</h4>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Do you want to delete this permanently?
+                                                                តើអ្នកចង់លុបសិស្សឈ្មោះ
+                                                                {{ $student->stname }} វាជារៀងរហូតមែនដែរទេ?
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-primary"
-                                                                    data-bs-dismiss="modal">Close</button>
+                                                                    data-bs-dismiss="modal">បិទ</button>
                                                                 <button type="button" class="btn btn-danger"
                                                                     onclick="deleteStudent('deleteForm{{ $student->id }}')"
-                                                                    data-bs-dismiss="modal">Yes</button>
+                                                                    data-bs-dismiss="modal">បាទ / ចាស</button>
                                                             </div>
                                                         </div>
                                                     </div>

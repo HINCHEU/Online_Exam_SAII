@@ -93,7 +93,7 @@
                                                     @foreach ($Teachers as $teacher)
                                                         <tr class="">
                                                             <td class="dtr-control sorting_1" tabindex="0">
-                                                                {{ $teacher->id }}</td>
+                                                                {{ $loop->index + 1 }}</td>
                                                             <td>{{ $teacher->name }}</td>
                                                             <th>
                                                                 @if ($teacher->user_image != null)

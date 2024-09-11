@@ -88,7 +88,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"
-                                                            id="assignGroupModalLabel-{{ $examall->id }}">Assign Group
+                                                            id="assignGroupModalLabel-{{ $examall->id }}">ដាក់អោយក្រុម
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -100,7 +100,7 @@
                                                             method="POST">
                                                             @csrf
                                                             <div class="form-group">
-                                                                <label for="group">Select Group</label>
+                                                                <label for="group">ជ្រើសរើសក្រុម</label>
                                                                 <select name="group_id" class="form-control" id="group">
                                                                     @foreach ($groups as $group)
                                                                         <option value="{{ $group->id }}">
@@ -108,11 +108,11 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <button type="submit" class="btn btn-primary">Assign</button>
+                                                            <button type="submit" class="btn btn-primary">ដាក់</button>
                                                         </form>
                                                         <hr>
                                                         <div class="form-group">
-                                                            <label>Assigned Group:</label>
+                                                            <label>ក្រុមដែលបានដាក់:</label>
                                                             <ul>
                                                                 @if (isset($assignedGroups[$examall->id]))
                                                                     @foreach ($assignedGroups[$examall->id] as $assignedGroup)
@@ -124,12 +124,12 @@
                                                                                 @csrf
                                                                                 @method('DELETE')
                                                                                 <button type="submit"
-                                                                                    class="btn btn-danger btn-sm mt-2">Unassign</button>
+                                                                                    class="btn btn-danger btn-sm mt-2">ដក</button>
                                                                             </form>
                                                                         </li>
                                                                     @endforeach
                                                                 @else
-                                                                    <li>No groups assigned</li>
+                                                                    <li>មិនទាន់មានក្រុមដែលបានដាក់</li>
                                                                 @endif
                                                             </ul>
                                                         </div>

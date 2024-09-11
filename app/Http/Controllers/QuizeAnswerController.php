@@ -76,7 +76,7 @@ class QuizeAnswerController extends Controller
         }
 
         // Redirect to a route after saving
-        return redirect()->route('exam.show')->with('success', 'Questions added successfully');
+        return redirect()->route('exam.show')->with('success', 'បង្កើតកាប្រលងបានជោគជ័យ');
     }
     public function updateView(Request $request, $exam_id)
     {

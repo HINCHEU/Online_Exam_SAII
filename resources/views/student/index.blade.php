@@ -18,15 +18,15 @@
         </div>
 
         <div class="jumbotron text-center">
-            <h1 class="display-3">Hi {{ Auth::user()->name }}, welcome back!</h1>
-            <p class="lead">There's an exam waiting for you!</p>
+            <h1 class="display-3">សួស្ដី {{ Auth::user()->name }}, កាត្រឡប់មកវិញ!</h1>
+            <p class="lead">មានការប្រលងកំពុងរងចាំអ្នក!</p>
         </div>
 
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <h3 class="mb-2">
-                        You have {{ count($exams) }} exam{{ count($exams) > 1 ? 's' : '' }} to do.
+                        អ្នកមានកាប្រលងចំនួន {{ count($exams) }}
                     </h3>
                     <div class="col-12" style="display: flex; flex-wrap: wrap;">
                         @if (count($exams) > 0)
@@ -37,11 +37,11 @@
                                             {{ $exam->courseName }}
                                         </h2>
                                         <p class="card-text">
-                                            Description: {{ $exam->description }}<br>
-                                            Topic: {{ $exam->topic }}
+                                            អំពី: {{ $exam->description }}<br>
+                                            ប្រធាន: {{ $exam->topic }}
                                         </p>
                                         <p>
-                                            Exam Date:
+                                            កាលបរិច្ឆេទ:
                                             @php
                                                 $examDate = is_string($exam->date)
                                                     ? new \DateTime($exam->date)
@@ -66,9 +66,9 @@
                                                 );
                                             @endphp
                                             {{ $examDate->format('d m Y') }}<br>
-                                            Exam Time: {{ $startTime->format('H:i') }} - {{ $endTime->format('H:i') }}
+                                            ម៉ោង: {{ $startTime->format('H:i') }} - {{ $endTime->format('H:i') }}
                                         </p>
-                                        <p>Score: {{ $exam->score }}/{{ $exam->full_mark }}</p>
+                                        <p>ពិន្ទុ: {{ $exam->score }}/{{ $exam->full_mark }}</p>
 
                                         <!-- Debugging Information -->
                                         <p>Current Time: {{ $currentDateTime->format('Y-m-d H:i:s') }}</p>
@@ -96,7 +96,7 @@
 
                                                 @if ($hasAttemptedAnyExam)
                                                     <div class="alert alert-info">
-                                                        You have already taken an exam in this session.
+                                                        អ្នកបានប្រលងរួចហើយ
                                                     </div>
                                                 @else
                                                     <div class="action">
@@ -105,7 +105,7 @@
                                                             @csrf
                                                             <button type="submit" class="btn btn-link btn-primary"
                                                                 style="padding: 0; margin: 0; color:wheat">
-                                                                Take Exam
+                                                                ប្រលង
                                                             </button>
                                                         </form>
                                                     </div>

@@ -205,7 +205,8 @@
                             <img src="{{ asset(Auth::user()->user_image) }}" class="img-circle elevation-2"
                                 alt="User Image">
                         @else
-                            <img src="{{ asset('logo/cheu.png') }}" class="img-circle elevation-2" alt="User Image">
+                            <img src="{{ asset('logo/pretty_girl_smile.png') }}" class="img-circle elevation-2"
+                                alt="User Image">
                         @endif
                     </div>
                     <div class="info">
@@ -329,15 +330,15 @@
                                             class="table table-bordered table-striped table-hover">
                                             <thead>
                                                 <tr class="bg-primary">
-                                                    <th style="width: 3%;">លេខ</th>
-                                                    <th style="width: 20%;">ឈ្មោះ</th>
-                                                    <th style="width: 10%;">អ៊ីម៉ែលសិស្ស</th>
-                                                    <th style="width: 4%;">ភេទ</th>
-                                                    <th style="width: 10%;">ក្រុម</th>
-                                                    <th style="width: 30%;">ថ្ងៃ ខែ កំណើត</th>
-                                                    <th style="width: 15%;">ប្រធានប្រលង</th>
-                                                    <th style="width: 20%;">ឈ្មោះប្រលង</th>
-                                                    <th style="width: 5%;">ពិន្ទុ</th>
+                                                    <th>លេខ</th>
+                                                    <th>ឈ្មោះ</th>
+                                                    <th>អ៊ីម៉ែលសិស្ស</th>
+                                                    <th>ភេទ</th>
+                                                    <th>ក្រុម</th>
+                                                    <th>ថ្ងៃ ខែ កំណើត</th>
+                                                    <th>ប្រធានប្រលង</th>
+                                                    <th>ឈ្មោះប្រលង</th>
+                                                    <th>ពិន្ទុ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -373,13 +374,13 @@
         <!-- /.content-wrapper -->
 
         <!-- Main Footer -->
-        <footer class="footer">
+        {{-- <footer class="footer">
             <div class="container">
                 <p class="float-left">&copy; 2023-2024 <a href="https://adminlte.io">OnlineExam.com</a>. All rights
                     reserved.</p>
                 <p class="float-right">Version 3.2.0</p>
             </div>
-        </footer>
+        </footer> --}}
         <!-- /.footer -->
     </div>
     <!-- ./wrapper -->
@@ -411,7 +412,7 @@
             var table = $('#studentScoresTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    'copy', 'csv', 'excel', 'pdf'
                 ]
 
             });

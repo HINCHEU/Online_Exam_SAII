@@ -132,7 +132,8 @@
                             <img src="{{ asset(Auth::user()->user_image) }}" class="img-circle elevation-2"
                                 alt="User Image">
                         @else
-                            <img src="{{ asset('logo/cheu.png') }}" class="img-circle elevation-2" alt="User Image">
+                            <img src="{{ asset('logo/pretty_girl_smile.png') }}" class="img-circle elevation-2"
+                                alt="User Image">
                         @endif
                     </div>
                     <div class="info">
@@ -161,7 +162,9 @@
                                     class="nav-link {{ request()->is('index') ? 'active' : '' }}
                                 ">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    Dashboard</a>
+                                    {{-- Dashboard --}}
+                                    ផ្ទាំងព៍ត៌មាន
+                                </a>
                             </li>
                         @endif
 
@@ -170,7 +173,7 @@
                                 <a href="{{ url('teacher') }}"
                                     class="nav-link {{ Request::is('teacher') ? 'active' : '' }}">
                                     <i class="fas fa-chalkboard-teacher mr-2"></i>
-                                    Teacher</a>
+                                    គ្រូ</a>
                             </li>
                         @endif
 

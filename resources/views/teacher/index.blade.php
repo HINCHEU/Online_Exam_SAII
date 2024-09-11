@@ -22,7 +22,7 @@
 
         <!-- Main content -->
         <div class="alert alert-success mr-2 ml-2" role="alert">
-            Wecome Teacher {{ Auth::user()->name }}
+            សូមស្វាគមន៍ គ្រូ {{ Auth::user()->name }}
         </div>
 
         <!-- /.content -->

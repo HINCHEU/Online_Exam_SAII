@@ -12,9 +12,16 @@ class GroupController extends Controller
     //
     public function index()
     {
-        $group = Group::where('created_by', Auth::user()->id)->where('status', 1)->get();
-        return view('teacher.exam.group.group')->with('groups', $group);
+        $groups = Group::where('created_by', Auth::user()->id)
+            ->where('status', 1)
+            ->withCount(['students' => function ($query) {
+                $query->where('status', 1); // Only count active students
+            }])
+            ->get();
+
+        return view('teacher.exam.group.group', compact('groups'));
     }
+
     public function show()
     {
         return view('teacher.exam.group.AddGroup');
@@ -28,7 +35,7 @@ class GroupController extends Controller
                 function ($attribute, $value, $fail) {
                     $userId = Auth::id();
                     if (Group::where('name', $value)->where('created_by', $userId)->exists()) {
-                        $fail('The ' . $attribute . ' has already been taken by you.');
+                        $fail('ក្រុម ' . $attribute . ' ត្រូវបានប្រើប្រាស់ដោយអ្នកម្ដងរួចមកហើយ');
                     }
                 },
             ],
@@ -44,7 +51,7 @@ class GroupController extends Controller
         if ($group->save()) {
             // Redirect with success message and newly created group ID
             return redirect()->route('group.show')
-                ->with('success', 'Group created successfully!')
+                ->with('success', 'បង្កើតក្រុមដោយជោគជ័យ!')
                 ->with('group', $group); // Pass the newly created group
         } else {
             return redirect()->route('group.add')
@@ -80,7 +87,7 @@ class GroupController extends Controller
         // Save the changes and handle the response
         if ($group->save()) {
             return redirect()->route('group.show', ['group_id' => $group->id])
-                ->with('success', 'Group updated successfully!');
+                ->with('success', 'កែសម្រួលក្រុមបានជោកជ័យ!');
         } else {
             return redirect()->route('group.edit', ['group_id' => $group->id])
                 ->withErrors($group->getErrors())
@@ -94,12 +101,12 @@ class GroupController extends Controller
         $group = Group::findOrFail($id);
 
         if (!$group) {
-            return redirect()->route('group.show')->with('error', 'group not found.');
+            return redirect()->route('group.show')->with('error', 'មិនអាចរកក្រុមឃើញ');
         }
 
         // Update the status to 0 instead of deleting
         $group->status = 0;
         $group->save();
-        return redirect()->route('group.show')->with('successfull', 'delete succesfully not found.');
+        return redirect()->route('group.show')->with('successfull', 'លុបក្រុមបានជោគជ័យ!');
     }
 }

@@ -14,32 +14,6 @@ use App\Models\Answer; // Assuming you have an Answer model to store the answers
 
 class AttenceExamController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $user_id = Auth::user()->id;
-
-    //     // Find the student's group_id
-    //     $student = Student::where('user_id', $user_id)->first();
-
-    //     if (!$student) {
-    //         // Handle case when the student is not found
-    //         return redirect()->back()->withErrors('Student not found.');
-    //     }
-
-    //     $group_id = $student->group_id;
-
-    //     // Find exam_ids that are assigned with the group in the AssignExam table
-    //     $exam_ids = AssignExam::where('group_id', $group_id)
-    //         ->where('is_assigned', 1)
-    //         ->pluck('exam_id');
-
-    //     // Find the exams that are assigned to the group
-    //     $exams = Exam::whereIn('id', $exam_ids)->get();
-
-    //     return view('student.index')->with('exams', $exams);
-    // }
-
-    // app/Http/Controllers/AttenceExamController.php
 
     public function index(Request $request)
     {
@@ -102,22 +76,44 @@ class AttenceExamController extends Controller
         // Return the view with exams and their respective scores
         return view('student.index')->with('exams', $exams);
     }
+    // public function show(Request $request, $exam_id)
+    // {
+    //     $exam = Exam::where('id', $exam_id)->first();
+    //     $quize = Quize::where('id', $exam_id)->first();
+    //     $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
 
+    //     return view('student.exam')
+    //         ->with('exam', $exam)
+    //         ->with('quize', $quize)
+    //         ->with('questions', $quizeAnswers);
+    // }
 
+    // public function submit(Request $request)
+    // {
+    //     // Validate the request data
+    //     $request->validate([
+    //         'exam_id' => 'required|integer|exists:exams,id',
+    //         'answers' => 'required|array',
+    //         'answers.*' => 'required|string'
+    //     ]);
 
+    //     $examId = $request->input('exam_id');
+    //     $answers = $request->input('answers');
 
+    //     // Loop through the answers and save them to the database
+    //     foreach ($answers as $questionId => $answer) {
+    //         Answer::create([
+    //             'exam_id' => $examId,
+    //             'question_id' => $questionId,
+    //             'answer' => $answer,
+    //             'user_id' => auth()->user()->id
+    //         ]);
+    //     }
 
-    public function show(Request $request, $exam_id)
-    {
-        $exam = Exam::where('id', $exam_id)->first();
-        $quize = Quize::where('id', $exam_id)->first();
-        $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
-
-        return view('student.exam')
-            ->with('exam', $exam)
-            ->with('quize', $quize)
-            ->with('questions', $quizeAnswers);
-    }
+    //     // Redirect back or to a results page with a success message
+    //     return redirect()->route('student', ['exam' => $examId])
+    //         ->with('success', 'Your answers have been submitted successfully!');
+    // }
 
     public function submit(Request $request)
     {
@@ -130,20 +126,59 @@ class AttenceExamController extends Controller
 
         $examId = $request->input('exam_id');
         $answers = $request->input('answers');
+        $userId = auth()->user()->id;
+
+        // Check if the user has already submitted answers for this exam
+        $existingAnswers = Answer::where('exam_id', $examId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if ($existingAnswers && $existingAnswers->submitted) {
+            return redirect()->route('student')
+                ->with('message', 'អ្នកបានប្រលងរួចហើយ');
+        }
 
         // Loop through the answers and save them to the database
         foreach ($answers as $questionId => $answer) {
-            Answer::create([
-                'exam_id' => $examId,
-                'question_id' => $questionId,
-                'answer' => $answer,
-                'user_id' => auth()->user()->id
-            ]);
+            Answer::updateOrCreate(
+                [
+                    'exam_id' => $examId,
+                    'question_id' => $questionId,
+                    'user_id' => $userId
+                ],
+                [
+                    'answer' => $answer,
+                    'submitted' => true
+                ]
+            );
         }
 
-        // Redirect back or to a results page with a success message
-        return redirect()->route('student', ['exam' => $examId])
-            ->with('success', 'Your answers have been submitted successfully!');
+        // Redirect to the results page or some other page
+        return redirect()->route('student')
+            ->with('success', 'ការប្រលងរបស់អ្នកបានដោយជោគជ័យ');
+    }
+    public function show(Request $request, $exam_id)
+    {
+        $userId = Auth::user()->id;
+
+        // Check if the user has already submitted answers for this exam
+        $existingAnswers = Answer::where('exam_id', $exam_id)
+            ->where('user_id', $userId)
+            ->first();
+
+        if ($existingAnswers && $existingAnswers->submitted) {
+            return redirect()->route('student')
+                ->with('error', 'អ្នកបានប្រលងរួចមកហើយ');
+        }
+
+        $exam = Exam::where('id', $exam_id)->first();
+        $quize = Quize::where('id', $exam_id)->first();
+        $quizeAnswers = QuizeAnswer::where('quize_id', $exam_id)->get();
+
+        return view('student.exam')
+            ->with('exam', $exam)
+            ->with('quize', $quize)
+            ->with('questions', $quizeAnswers);
     }
 
 
@@ -152,25 +187,12 @@ class AttenceExamController extends Controller
         $this->middleware('auth');
     }
 
-    // public function result($examId)
-    // {
-    //     // Fetch the results or display a confirmation message
-    //     return view('exam.result', compact('examId'));
-    // }
 
     public function result($examId)
     {
-        // Example logic to fetch exam details or results
-        // $user_id = Auth::id();
-        // $exam_ids = Exam::where('created_by', $examId)->get('id');
-        // $quize = Quize::where('exam_id', $exam_ids)->get();
         return redirect()->route('student');
     }
 
-
-
-
-    // app/Http/Controllers/AttenceExamController.php
     public function calculateScore(Request $request)
     {
         $user_id = Auth::user()->id;

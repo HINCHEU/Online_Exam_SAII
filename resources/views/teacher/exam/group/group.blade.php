@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Group</h1>
+                        <h1 class="m-0">ក្រុម</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -37,7 +37,7 @@
                                         <form id="logout-form" action="{{ route('group.add') }}" method="GET"
                                             style="">
                                             @csrf
-                                            <button class="btn btn-primary">+ Add </button>
+                                            <button class="btn btn-primary">+ បន្ងែម </button>
                                         </form>
                                     </div>
                                 </div>
@@ -88,6 +88,12 @@
                                                                 {{-- Status --}}
                                                                 ស្ថានភាព
                                                             </th>
+                                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1"
+                                                                style=""
+                                                                aria-label="CSS grade: activate to sort column ascending">
+                                                                {{-- Status --}}
+                                                                ក្រុម
+                                                            </th>
                                                             <th class="sorting" tabindex="0" aria-controls="example2"
                                                                 rowspan="1" colspan="1" style=""
                                                                 aria-label="CSS grade: activate to sort column ascending">
@@ -106,6 +112,7 @@
                                                                 <td>{{ $group->name }}</td>
                                                                 <td>{{ $group->desc }}</td>
                                                                 <td>{{ $group->status }}</td>
+                                                                <td>{{ $group->students_count }} នាក់</td>
 
 
                                                                 <td style="display: flex;">
@@ -115,7 +122,7 @@
                                                                         @csrf
                                                                         @method('GET')
                                                                         <button type="submit"
-                                                                            class="btn btn-warning">Update</button>
+                                                                            class="btn btn-warning">កែប្រែ</button>
                                                                     </form>
                                                                     <form class="ml-1 deleteForm"
                                                                         id="deleteForm{{ $group->id }}"
@@ -125,7 +132,7 @@
                                                                         @method('DELETE')
                                                                         <button type="button" class="btn btn-danger"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#myModal{{ $group->id }}">Delete</button>
+                                                                            data-bs-target="#myModal{{ $group->id }}">លុប</button>
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -143,19 +150,19 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Confirm Delete</h4>
+                                                                <h4 class="modal-title">បញ្ជាក់ការលុប</h4>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Do you want to delete this permanently?
+                                                                តើអ្នកពិតជាចង់លុបក្រុម {{ $group->name }} ជារៀងរហូតមែនទេ?
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-dismiss="modal">Close</button>
                                                                 <button type="button" class="btn btn-danger"
                                                                     onclick="deleteStudent('deleteForm{{ $group->id }}')"
-                                                                    data-bs-dismiss="modal">Yes</button>
+                                                                    data-bs-dismiss="modal">បាទ/ចាស</button>
                                                             </div>
                                                         </div>
                                                     </div>
